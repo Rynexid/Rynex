@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="100" y="220" width="312" height="180" rx="18" stroke="#2563EB" stroke-width="2.2"/>
+
+  <path d="M100 220 C100 180, 140 140, 200 130 C220 127, 240 126, 256 126 C272 126, 300 127, 330 135 C370 146, 412 175, 412 220" stroke="#2563EB" stroke-width="2.2"/>
+
+  <rect x="140" y="160" width="32" height="24" rx="4" stroke="#60A5FA" stroke-width="2.2"/>
+  <rect x="180" y="148" width="32" height="24" rx="4" stroke="#60A5FA" stroke-width="2.2"/>
+  <rect x="220" y="142" width="32" height="24" rx="4" stroke="#60A5FA" stroke-width="2.2"/>
+  <rect x="260" y="138" width="32" height="24" rx="4" stroke="#93C5FD" stroke-width="2.2"/>
+  <rect x="300" y="144" width="32" height="24" rx="4" stroke="#93C5FD" stroke-width="2.2"/>
+
+  <line x1="130" y1="270" x2="382" y2="270" stroke="#2563EB" stroke-width="2.2"/>
+  <line x1="130" y1="310" x2="382" y2="310" stroke="#2563EB" stroke-width="2.2"/>
+  <line x1="130" y1="350" x2="382" y2="350" stroke="#2563EB" stroke-width="2.2"/>
+
+  <circle cx="390" cy="370" r="5" stroke="#60A5FA" stroke-width="2.2"/>
+  <circle cx="390" cy="340" r="5" stroke="#93C5FD" stroke-width="2.2"/>
+  <circle cx="390" cy="310" r="5" stroke="#60A5FA" stroke-width="2.2"/>
+
+  <circle cx="256" cy="430" r="6" stroke="#94A3B8" stroke-width="2.2"/>
+  <line x1="256" y1="400" x2="256" y2="424" stroke="#94A3B8" stroke-width="2.2"/>
+</svg>
