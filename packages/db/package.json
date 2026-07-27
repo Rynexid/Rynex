@@ -1,0 +1,31 @@
+{
+  "name": "@rynex/db",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/migrate.ts",
+    "db:seed": "tsx src/seed.ts",
+    "db:seed:portfolio": "tsx src/seed-portfolio.ts"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "drizzle-orm": "^0.45.2"
+  },
+  "devDependencies": {
+    "@types/node": "25.6.0",
+    "dotenv": "^17.4.2",
+    "drizzle-kit": "^0.31.10",
+    "pg": "^8.22.0",
+    "tsx": "^4.23.0",
+    "typescript": "6.0.3"
+  }
+}

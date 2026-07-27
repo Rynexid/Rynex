@@ -1,17 +1,54 @@
-# next.js
-.next/
-out/
+# dependencies
+/node_modules
 
-# env files
+# next.js
+/.next/
+/out/
+
+# build
+/build
+/dist/
+
+# debug
+*.log
+
+# local env files
 .env
 .env*.local
 
-# typescript
-next-env.d.ts
-*.tsbuildinfo
+# vercel
+.vercel
 
-# debug
-npm-debug.log*
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# eslint
+.eslintcache
+
+# next-sitemap (generated at build)
+robots.txt
+sitemap*.xml
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# test artifacts
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
 
 # turbo
 .turbo/
+
+# cache
+.cache/
+
+# agent guidance (local only)
+/AGENTS.md
