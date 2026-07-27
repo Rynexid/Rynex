@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2">
+  <!-- Base platform -->
+  <rect x="160" y="420" width="192" height="24" rx="12" stroke="#2563EB" />
+  <line x1="184" y1="432" x2="328" y2="432" stroke="#60A5FA" stroke-width="1" opacity="0.4" />
+
+  <!-- Launch pad lines -->
+  <line x1="200" y1="444" x2="200" y2="456" stroke="#94A3B8" />
+  <line x1="312" y1="444" x2="312" y2="456" stroke="#94A3B8" />
+  <line x1="176" y1="456" x2="336" y2="456" stroke="#94A3B8" />
+
+  <!-- Rocket / upward arrow body -->
+  <line x1="256" y1="416" x2="256" y2="240" stroke="#2563EB" stroke-width="3" />
+
+  <!-- Rocket arrow head -->
+  <polyline points="240,260 256,232 272,260" stroke="#2563EB" stroke-width="2.5" />
+
+  <!-- Rocket fins -->
+  <polyline points="244,400 232,416 244,416" stroke="#60A5FA" />
+  <polyline points="268,400 280,416 268,416" stroke="#60A5FA" />
+
+  <!-- Cloud top-left -->
+  <path d="M108,180 a24,24 0 0,1 4,-44 a28,28 0 0,1 48,-8 a20,20 0 0,1 36,12 a16,16 0 0,1,-4,32 Z" stroke="#93C5FD" />
+
+  <!-- Cloud top-right -->
+  <path d="M316,140 a20,20 0 0,1 4,-36 a24,24 0 0,1 40,-8 a18,18 0 0,1 32,12 a14,14 0 0,1,-4,28 Z" stroke="#93C5FD" />
+
+  <!-- Cloud small top-center -->
+  <path d="M196,108 a16,16 0 0,1 4,-28 a20,20 0 0,1 32,-4 a14,14 0 0,1 24,10 a12,12 0 0,1,-4,22 Z" stroke="#60A5FA" />
+
+  <!-- Pipeline connecting lines -->
+  <line x1="256" y1="232" x2="256" y2="180" stroke="#93C5FD" stroke-dasharray="6 4" />
+  <line x1="256" y1="160" x2="180" y2="120" stroke="#93C5FD" stroke-dasharray="6 4" />
+  <line x1="256" y1="160" x2="340" y2="100" stroke="#93C5FD" stroke-dasharray="6 4" />
+  <line x1="256" y1="160" x2="256" y2="108" stroke="#93C5FD" stroke-dasharray="6 4" />
+
+  <!-- Checkmark nodes along the path -->
+  <!-- Checkmark node 1 - near base -->
+  <circle cx="256" cy="370" r="12" stroke="#2563EB" />
+  <polyline points="250,370 254,374 262,366" stroke="#2563EB" stroke-width="2" />
+
+  <!-- Checkmark node 2 - mid path -->
+  <circle cx="256" cy="300" r="12" stroke="#60A5FA" />
+  <polyline points="250,300 254,304 262,296" stroke="#60A5FA" stroke-width="2" />
+
+  <!-- Checkmark node 3 - upper path -->
+  <circle cx="256" cy="200" r="12" stroke="#2563EB" />
+  <polyline points="250,200 254,204 262,196" stroke="#2563EB" stroke-width="2" />
+
+  <!-- Side checkmark nodes -->
+  <circle cx="160" cy="140" r="10" stroke="#93C5FD" />
+  <polyline points="155,140 158,143 164,136" stroke="#93C5FD" stroke-width="1.8" />
+
+  <circle cx="352" cy="108" r="10" stroke="#93C5FD" />
+  <polyline points="347,108 350,111 356,104" stroke="#93C5FD" stroke-width="1.8" />
+
+  <!-- Exhaust lines -->
+  <line x1="244" y1="420" x2="236" y2="440" stroke="#93C5FD" stroke-width="1.2" opacity="0.5" />
+  <line x1="256" y1="420" x2="256" y2="444" stroke="#93C5FD" stroke-width="1.2" opacity="0.5" />
+  <line x1="268" y1="420" x2="276" y2="440" stroke="#93C5FD" stroke-width="1.2" opacity="0.5" />
+</svg>

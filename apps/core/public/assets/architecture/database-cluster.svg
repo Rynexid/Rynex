@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2">
+  <!-- === Left Secondary Database === -->
+  <!-- Cylinder body -->
+  <ellipse cx="116" cy="196" rx="72" ry="20" stroke="#60A5FA"/>
+  <line x1="44" y1="196" x2="44" y2="316" stroke="#60A5FA"/>
+  <line x1="188" y1="196" x2="188" y2="316" stroke="#60A5FA"/>
+  <ellipse cx="116" cy="316" rx="72" ry="20" stroke="#60A5FA"/>
+  <!-- Inner ring lines -->
+  <ellipse cx="116" cy="236" rx="72" ry="14" stroke="#60A5FA" stroke-width="1.4" opacity="0.5"/>
+  <ellipse cx="116" cy="276" rx="72" ry="14" stroke="#60A5FA" stroke-width="1.4" opacity="0.5"/>
+
+  <!-- === Center Primary Database (larger) === -->
+  <!-- Cylinder body -->
+  <ellipse cx="256" cy="168" rx="88" ry="24" stroke="#2563EB"/>
+  <line x1="168" y1="168" x2="168" y2="344" stroke="#2563EB"/>
+  <line x1="344" y1="168" x2="344" y2="344" stroke="#2563EB"/>
+  <ellipse cx="256" cy="344" rx="88" ry="24" stroke="#2563EB"/>
+  <!-- Inner ring lines -->
+  <ellipse cx="256" cy="212" rx="88" ry="16" stroke="#2563EB" stroke-width="1.4" opacity="0.5"/>
+  <ellipse cx="256" cy="256" rx="88" ry="16" stroke="#2563EB" stroke-width="1.4" opacity="0.5"/>
+  <ellipse cx="256" cy="300" rx="88" ry="16" stroke="#2563EB" stroke-width="1.4" opacity="0.5"/>
+
+  <!-- Crown / Primary indicator -->
+  <path d="M240 152 L248 136 L256 148 L264 136 L272 152" stroke="#2563EB" stroke-width="2.2" fill="none"/>
+
+  <!-- === Right Secondary Database === -->
+  <!-- Cylinder body -->
+  <ellipse cx="396" cy="196" rx="72" ry="20" stroke="#93C5FD"/>
+  <line x1="324" y1="196" x2="324" y2="316" stroke="#93C5FD"/>
+  <line x1="468" y1="196" x2="468" y2="316" stroke="#93C5FD"/>
+  <ellipse cx="396" cy="316" rx="72" ry="20" stroke="#93C5FD"/>
+  <!-- Inner ring lines -->
+  <ellipse cx="396" cy="236" rx="72" ry="14" stroke="#93C5FD" stroke-width="1.4" opacity="0.5"/>
+  <ellipse cx="396" cy="276" rx="72" ry="14" stroke="#93C5FD" stroke-width="1.4" opacity="0.5"/>
+
+  <!-- === Connecting lines === -->
+  <!-- Left ↔ Center -->
+  <line x1="188" y1="256" x2="168" y2="256" stroke="#94A3B8" stroke-width="2.2" stroke-dasharray="6 4"/>
+  <circle cx="188" cy="256" r="3.5" fill="#94A3B8" stroke="none"/>
+  <circle cx="168" cy="256" r="3.5" fill="#94A3B8" stroke="none"/>
+
+  <!-- Center ↔ Right -->
+  <line x1="344" y1="256" x2="324" y2="256" stroke="#94A3B8" stroke-width="2.2" stroke-dasharray="6 4"/>
+  <circle cx="344" cy="256" r="3.5" fill="#94A3B8" stroke="none"/>
+  <circle cx="324" cy="256" r="3.5" fill="#94A3B8" stroke="none"/>
+
+  <!-- === Replication arrows === -->
+  <!-- Left → Center replication -->
+  <path d="M160 380 L240 380" stroke="#60A5FA" stroke-width="2.2" fill="none"/>
+  <polygon points="238,376 248,380 238,384" fill="#60A5FA" stroke="none"/>
+  <path d="M240 392 L160 392" stroke="#60A5FA" stroke-width="2.2" fill="none"/>
+  <polygon points="162,388 152,392 162,396" fill="#60A5FA" stroke="none"/>
+
+  <!-- Center → Right replication -->
+  <path d="M272 380 L352 380" stroke="#93C5FD" stroke-width="2.2" fill="none"/>
+  <polygon points="350,376 360,380 350,384" fill="#93C5FD" stroke="none"/>
+  <path d="M352 392 L272 392" stroke="#93C5FD" stroke-width="2.2" fill="none"/>
+  <polygon points="274,388 264,392 274,396" fill="#93C5FD" stroke="none"/>
+
+  <!-- Sync dots -->
+  <circle cx="200" cy="386" r="4" fill="none" stroke="#94A3B8" stroke-width="2.2"/>
+  <circle cx="200" cy="386" r="1.5" fill="#94A3B8" stroke="none"/>
+  <circle cx="312" cy="386" r="4" fill="none" stroke="#94A3B8" stroke-width="2.2"/>
+  <circle cx="312" cy="386" r="1.5" fill="#94A3B8" stroke="none"/>
+
+  <!-- Status indicators -->
+  <circle cx="56" cy="440" r="5" fill="none" stroke="#60A5FA" stroke-width="2.2"/>
+  <circle cx="56" cy="440" r="2" fill="#60A5FA" stroke="none"/>
+  <circle cx="256" cy="440" r="5" fill="none" stroke="#2563EB" stroke-width="2.2"/>
+  <circle cx="256" cy="440" r="2" fill="#2563EB" stroke="none"/>
+  <circle cx="456" cy="440" r="5" fill="none" stroke="#93C5FD" stroke-width="2.2"/>
+  <circle cx="456" cy="440" r="2" fill="#93C5FD" stroke="none"/>
+
+  <!-- Status connecting line -->
+  <line x1="61" y1="440" x2="251" y2="440" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5"/>
+  <line x1="261" y1="440" x2="451" y2="440" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5"/>
+</svg>

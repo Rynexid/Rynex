@@ -1,0 +1,11 @@
+[
+  {
+    "id": "shopify",
+    "name": "Shopify",
+    "role": "Technology Partner",
+    "description": "Global commerce platform. RYNEX is a trusted Shopify Partner for custom storefronts.",
+    "logo": "/partners/shopify/logo-color-dark-bg.svg",
+    "website": "https://www.shopify.com",
+    "featured": true
+  }
+]

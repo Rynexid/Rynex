@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2">
+  <!-- Editor window frame -->
+  <rect x="72" y="56" width="368" height="312" rx="14" stroke="#2563EB" />
+
+  <!-- Title bar -->
+  <line x1="72" y1="100" x2="440" y2="100" stroke="#2563EB" />
+
+  <!-- Title bar dots -->
+  <circle cx="100" cy="78" r="5" fill="#EF4444" stroke="none" />
+  <circle cx="120" cy="78" r="5" fill="#F59E0B" stroke="none" />
+  <circle cx="140" cy="78" r="5" fill="#22C55E" stroke="none" />
+
+  <!-- Tab indicator -->
+  <rect x="172" y="70" width="72" height="16" rx="6" stroke="#60A5FA" />
+  <rect x="256" y="70" width="56" height="16" rx="6" stroke="#93C5FD" />
+
+  <!-- Code lines: left gutter line -->
+  <line x1="96" y1="116" x2="96" y2="348" stroke="#94A3B8" stroke-width="1" opacity="0.3" />
+
+  <!-- Line 1 (indent 0) -->
+  <line x1="112" y1="124" x2="220" y2="124" stroke="#60A5FA" />
+
+  <!-- Line 2 (indent 1) -->
+  <line x1="136" y1="148" x2="280" y2="148" stroke="#93C5FD" />
+
+  <!-- Line 3 (indent 2) -->
+  <line x1="160" y1="172" x2="304" y2="172" stroke="#2563EB" />
+
+  <!-- Line 4 (indent 2) -->
+  <line x1="160" y1="196" x2="252" y2="196" stroke="#93C5FD" />
+
+  <!-- Line 5 (indent 1) -->
+  <line x1="136" y1="220" x2="200" y2="220" stroke="#93C5FD" />
+
+  <!-- Line 6 (indent 1) - highlighted cursor line -->
+  <rect x="106" y="238" width="298" height="22" rx="4" stroke="#2563EB" opacity="0.25" />
+  <line x1="136" y1="249" x2="340" y2="249" stroke="#2563EB" />
+  <!-- Cursor blink -->
+  <rect x="342" y="241" width="2" height="16" rx="1" fill="#2563EB" stroke="none" />
+
+  <!-- Line 7 (indent 2) -->
+  <line x1="160" y1="276" x2="288" y2="276" stroke="#93C5FD" />
+
+  <!-- Line 8 (indent 1) -->
+  <line x1="136" y1="300" x2="188" y2="300" stroke="#60A5FA" />
+
+  <!-- Line 9 (indent 0) -->
+  <line x1="112" y1="324" x2="164" y2="324" stroke="#94A3B8" />
+
+  <!-- Terminal separator -->
+  <line x1="72" y1="376" x2="440" y2="376" stroke="#2563EB" opacity="0.4" />
+
+  <!-- Terminal area -->
+  <rect x="72" y="376" width="368" height="96" rx="0" stroke="none" />
+  <line x1="72" y1="472" x2="440" y2="472" stroke="#2563EB" stroke-width="2.2" rx="0" />
+
+  <!-- Terminal prompt -->
+  <line x1="96" y1="400" x2="104" y2="400" stroke="#2563EB" />
+  <polyline points="98,394 92,400 98,406" stroke="#2563EB" />
+  <line x1="116" y1="400" x2="240" y2="400" stroke="#93C5FD" />
+
+  <!-- Terminal output lines -->
+  <line x1="96" y1="424" x2="300" y2="424" stroke="#22C55E" opacity="0.7" />
+  <line x1="96" y1="444" x2="200" y2="444" stroke="#94A3B8" />
+
+  <!-- Bracket accents -->
+  <line x1="88" y1="124" x2="96" y2="124" stroke="#60A5FA" stroke-width="1.5" />
+  <line x1="88" y1="148" x2="96" y2="148" stroke="#93C5FD" stroke-width="1.5" />
+  <line x1="88" y1="324" x2="96" y2="324" stroke="#94A3B8" stroke-width="1.5" />
+</svg>

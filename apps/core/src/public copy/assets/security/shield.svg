@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2">
+  <!-- Shield outline -->
+  <path
+    d="M256 42 L412 108 Q428 116 432 132 L448 300 Q450 328 436 356 Q396 436 256 478 Q116 436 76 356 Q62 328 64 300 L80 132 Q84 116 100 108 Z"
+    stroke="#2563EB"
+    stroke-width="2.8"
+  />
+  <!-- Inner shield accent line -->
+  <path
+    d="M256 68 L394 126 Q406 132 408 144 L422 296 Q424 320 414 342 Q380 412 256 448 Q132 412 98 342 Q88 320 90 296 L104 144 Q106 132 118 126 Z"
+    stroke="#60A5FA"
+    stroke-width="1.4"
+  />
+  <!-- Checkmark -->
+  <polyline
+    points="180 256 236 316 332 196"
+    stroke="#93C5FD"
+    stroke-width="4.5"
+  />
+</svg>
