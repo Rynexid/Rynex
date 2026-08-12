@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 const WEB_HOSTNAME = "rynexdev.vercel.app";
-const CORE_HOSTNAMES = ["rynexdev-core.vercel.app", "localhost:3001"];
+const CORE_HOSTNAMES = ["rynexdev-core.vercel.app", "rd-cores.vercel.app", "localhost:3001"];
 
 function getSessionCookie(request: NextRequest): string | undefined {
   return request.cookies.get("admin.session_token")?.value;
