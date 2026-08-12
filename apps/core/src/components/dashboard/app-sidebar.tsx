@@ -5,6 +5,7 @@ import {
   BarChart3,
   Briefcase,
   Calendar,
+  ChevronDown,
   CreditCard,
   FileEdit,
   FileText,
@@ -20,7 +21,6 @@ import {
   Users,
   Wrench,
 } from "lucide-react";
-import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -41,7 +41,19 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@rynex/ui/sidebar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@rynex/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@rynex/ui/avatar";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -90,28 +102,46 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar variant="inset" collapsible="icon">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <Link href="/dashboard">
-                <Image
-                  src="/Rynex.png"
-                  alt="RYNEX"
-                  width={28}
-                  height={28}
-                  className="h-5 w-auto"
-                  priority
-                />
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">RYNEX</span>
-                  <span className="text-muted-foreground truncate text-[11px]">
-                    Dashboard
-                  </span>
-                </div>
-              </Link>
-            </SidebarMenuButton>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton size="lg" asChild>
+                  <Link href="/dashboard">
+                    <Image
+                      src="/Rynex.png"
+                      alt="RYNEX"
+                      width={28}
+                      height={28}
+                      className="h-5 w-auto"
+                      priority
+                    />
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className="truncate font-semibold">RYNEX</span>
+                      <span className="text-muted-foreground truncate text-[11px]">
+                        Dashboard
+                      </span>
+                    </div>
+                    <ChevronDown className="ml-auto h-4 w-4" />
+                  </Link>
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-(--radix-dropdown-menu-trigger-width)"
+                align="start"
+              >
+                <DropdownMenuLabel>RYNEX</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <span>Dashboard</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span>Workspace</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
@@ -235,16 +265,50 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              isActive={isActive("/dashboard/settings")}
-              tooltip="Pengaturan"
-            >
-              <Link href="/dashboard/settings">
-                <Settings />
-                <span>Pengaturan</span>
-              </Link>
-            </SidebarMenuButton>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton
+                  size="lg"
+                  isActive={isActive("/dashboard/settings")}
+                  tooltip="Pengaturan"
+                >
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback>AD</AvatarFallback>
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-semibold">Admin</span>
+                    <span className="text-muted-foreground truncate text-[11px]">
+                      admin@rynex.id
+                    </span>
+                  </div>
+                  <ChevronDown className="ml-auto h-4 w-4" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-(--radix-dropdown-menu-trigger-width)"
+                side="top"
+              >
+                <DropdownMenuLabel>Admin Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard/settings">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Pengaturan
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={() => {
+                    fetch("/api/admin/auth/logout", { method: "POST" }).then(
+                      () => {
+                        window.location.href = "/login";
+                      },
+                    );
+                  }}
+                >
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
