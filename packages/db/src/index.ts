@@ -33,4 +33,6 @@ export {
   apiKeys,
   supportTickets,
   workspaces,
+  adminUsers,
+  adminSessions,
 } from "./schema";

@@ -27,6 +27,8 @@ export const users = authSchema.table("users", {
   banned: boolean("banned").default(false),
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires"),
+  licenseVerified: boolean("license_verified").default(false).notNull(),
+  licenseAttempts: integer("license_attempts").default(0).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -287,6 +289,42 @@ export const workspacesRelations = relations(workspaces, ({ one }) => ({
   user: one(users, {
     fields: [workspaces.userId],
     references: [users.id],
+  }),
+}));
+
+// ── Admin Auth Schema (separate from better-auth) ──
+
+const adminSchema = pgSchema("admin");
+
+export const adminUsers = adminSchema.table("users", {
+  id: text("id").primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  password: varchar("password", { length: 255 }).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  role: varchar("role", { length: 50 }).notNull().default("staff"),
+  licenseVerified: boolean("license_verified").default(false).notNull(),
+  licenseAttempts: integer("license_attempts").default(0).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const adminSessions = adminSchema.table("sessions", {
+  id: text("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => adminUsers.id, { onDelete: "cascade" }),
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const adminUsersRelations = relations(adminUsers, ({ many }) => ({
+  sessions: many(adminSessions),
+}));
+
+export const adminSessionsRelations = relations(adminSessions, ({ one }) => ({
+  user: one(adminUsers, {
+    fields: [adminSessions.userId],
+    references: [adminUsers.id],
   }),
 }));
 

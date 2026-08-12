@@ -4,7 +4,7 @@ const WEB_HOSTNAME = "rynexdev.vercel.app";
 const CORE_HOSTNAMES = ["rynexdev-core.vercel.app", "localhost:3001"];
 
 function getSessionCookie(request: NextRequest): string | undefined {
-  return request.cookies.get("better-auth.session_token")?.value;
+  return request.cookies.get("admin.session_token")?.value;
 }
 
 export function proxy(request: NextRequest) {
@@ -15,7 +15,7 @@ export function proxy(request: NextRequest) {
 
   if (isCore) {
     if (!sessionToken) {
-      const loginUrl = new URL("/login", `https://${WEB_HOSTNAME}`);
+      const loginUrl = new URL("/login", `https://${hostname}`);
       loginUrl.searchParams.set(
         "callbackUrl",
         `https://${hostname}${request.nextUrl.pathname}`,
