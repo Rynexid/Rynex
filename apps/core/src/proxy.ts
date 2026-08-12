@@ -10,15 +10,21 @@ function getSessionCookie(request: NextRequest): string | undefined {
 export function proxy(request: NextRequest) {
   const hostname = request.nextUrl.hostname;
   const sessionToken = getSessionCookie(request);
+  const { pathname } = request.nextUrl;
 
   const isCore = CORE_HOSTNAMES.includes(hostname);
 
   if (isCore) {
-    if (!sessionToken) {
+    const isPublicAuthPage =
+      pathname === "/login" ||
+      pathname === "/register" ||
+      pathname === "/onboarding";
+
+    if (!sessionToken && !isPublicAuthPage) {
       const loginUrl = new URL("/login", `https://${hostname}`);
       loginUrl.searchParams.set(
         "callbackUrl",
-        `https://${hostname}${request.nextUrl.pathname}`,
+        `https://${hostname}${pathname}`,
       );
       return NextResponse.redirect(loginUrl);
     }
