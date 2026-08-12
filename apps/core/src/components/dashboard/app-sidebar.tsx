@@ -5,14 +5,12 @@ import {
   BarChart3,
   Briefcase,
   Calendar,
-  ChevronDown,
   CreditCard,
   FileEdit,
   FileText,
   Gem,
   Kanban,
   Key,
-  LayoutDashboard,
   Package,
   Receipt,
   Settings,
@@ -23,294 +21,232 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@rynex/ui/collapsible";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@rynex/ui/sidebar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@rynex/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@rynex/ui/avatar";
+import { NavMain } from "@/components/dashboard/nav-main";
+import { NavSecondary } from "@/components/dashboard/nav-secondary";
+import { NavUser } from "@/components/dashboard/nav-user";
 
-const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+const navMain = [
+  {
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: BarChart3,
+    isActive: true,
+  },
+  {
+    title: "General",
+    url: "#",
+    icon: Settings,
+    isActive: true,
+    items: [
+      {
+        title: "Lisensi",
+        url: "/dashboard/licenses",
+        icon: Key,
+      },
+      {
+        title: "Produk",
+        url: "/dashboard/products",
+        icon: Package,
+      },
+      {
+        title: "Analitik",
+        url: "/dashboard/analytics",
+        icon: BarChart3,
+      },
+      {
+        title: "Konten",
+        url: "/dashboard/content",
+        icon: FileEdit,
+      },
+    ],
+  },
+  {
+    title: "POS",
+    url: "#",
+    icon: CreditCard,
+    items: [
+      {
+        title: "Transactions",
+        url: "/pos/transactions",
+        icon: ArrowLeftRight,
+      },
+      {
+        title: "Pesanan",
+        url: "/pos/orders",
+        icon: ShoppingCart,
+      },
+      {
+        title: "Pelanggan",
+        url: "/pos/clients",
+        icon: Users,
+      },
+      {
+        title: "Services",
+        url: "/pos/services",
+        icon: Wrench,
+      },
+      {
+        title: "Expenses",
+        url: "/pos/expenses",
+        icon: Receipt,
+      },
+      {
+        title: "Invoices",
+        url: "/pos/invoices",
+        icon: FileText,
+      },
+      {
+        title: "Payments",
+        url: "/pos/payments",
+        icon: CreditCard,
+      },
+      {
+        title: "Projects",
+        url: "/pos/projects",
+        icon: Kanban,
+      },
+      {
+        title: "Reports",
+        url: "/pos/reports",
+        icon: Briefcase,
+      },
+      {
+        title: "Calendar",
+        url: "/pos/calendar",
+        icon: Calendar,
+      },
+    ],
+  },
+  {
+    title: "Showcase",
+    url: "/dashboard/showcase",
+    icon: Sparkles,
+    items: [
+      {
+        title: "Ocupite",
+        url: "/dashboard/showcase/ocupite",
+        icon: Gem,
+      },
+      {
+        title: "Dealstack",
+        url: "/dashboard/showcase/dealstack",
+        icon: Gem,
+      },
+      {
+        title: "Codename",
+        url: "/dashboard/showcase/codename",
+        icon: Gem,
+      },
+      {
+        title: "Confidency OS",
+        url: "/dashboard/showcase/confidencyos",
+        icon: Gem,
+      },
+      {
+        title: "Ecomiq",
+        url: "/dashboard/showcase/ecomiq",
+        icon: Gem,
+      },
+      {
+        title: "Sublime",
+        url: "/dashboard/showcase/sublime",
+        icon: Gem,
+      },
+      {
+        title: "Belo.Fur",
+        url: "/dashboard/showcase/belo-fur",
+        icon: Gem,
+      },
+      {
+        title: "Ovalen",
+        url: "/dashboard/showcase/ovalen",
+        icon: Gem,
+      },
+      {
+        title: "Piccollo",
+        url: "/dashboard/showcase/piccollo",
+        icon: Gem,
+      },
+      {
+        title: "CozyPaws",
+        url: "/dashboard/showcase/cozypaws",
+        icon: Gem,
+      },
+    ],
+  },
 ];
 
-const generalNavItems = [
-  { href: "/dashboard/licenses", label: "Lisensi", icon: Key },
-  { href: "/dashboard/products", label: "Produk", icon: Package },
-  { href: "/dashboard/analytics", label: "Analitik", icon: BarChart3 },
-  { href: "/dashboard/content", label: "Konten", icon: FileEdit },
-];
-
-const posNavItems = [
-  { href: "/pos/transactions", label: "Transactions", icon: ArrowLeftRight },
-  { href: "/pos/orders", label: "Pesanan", icon: ShoppingCart },
-  { href: "/pos/clients", label: "Pelanggan", icon: Users },
-  { href: "/pos/services", label: "Services", icon: Wrench },
-  { href: "/pos/expenses", label: "Expenses", icon: Receipt },
-  { href: "/pos/invoices", label: "Invoices", icon: FileText },
-  { href: "/pos/payments", label: "Payments", icon: CreditCard },
-  { href: "/pos/projects", label: "Projects", icon: Kanban },
-  { href: "/pos/reports", label: "Reports", icon: Briefcase },
-  { href: "/pos/calendar", label: "Calendar", icon: Calendar },
-];
-
-const showcaseNavItems = [
-  { href: "/dashboard/showcase", label: "Showcase", icon: Sparkles },
-  { href: "/dashboard/showcase/ocupite", label: "Ocupite", icon: Gem },
-  { href: "/dashboard/showcase/dealstack", label: "Dealstack", icon: Gem },
-  { href: "/dashboard/showcase/codename", label: "Codename", icon: Gem },
-  { href: "/dashboard/showcase/confidencyos", label: "Confidency OS", icon: Gem },
-  { href: "/dashboard/showcase/ecomiq", label: "Ecomiq", icon: Gem },
-  { href: "/dashboard/showcase/sublime", label: "Sublime", icon: Gem },
-  { href: "/dashboard/showcase/belo-fur", label: "Belo.Fur", icon: Gem },
-  { href: "/dashboard/showcase/ovalen", label: "Ovalen", icon: Gem },
-  { href: "/dashboard/showcase/piccollo", label: "Piccollo", icon: Gem },
-  { href: "/dashboard/showcase/cozypaws", label: "CozyPaws", icon: Gem },
+const navSecondary = [
+  {
+    title: "Support",
+    url: "https://wa.me/628950888317",
+    icon: Users,
+  },
+  {
+    title: "Feedback",
+    url: "https://wa.me/628950888317",
+    icon: Users,
+  },
 ];
 
 export function AppSidebar() {
-  const pathname = usePathname();
+  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
 
-  const isActive = (href: string) => {
-    if (href === "/dashboard") return pathname === "/dashboard";
-    return pathname.startsWith(href);
-  };
+  useEffect(() => {
+    fetch("/api/admin/auth/session")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data?.user) {
+          setUser({
+            name: data.user.name || "Admin",
+            email: data.user.email,
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <Sidebar variant="inset" collapsible="icon">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton size="lg" asChild>
-                  <Link href="/dashboard">
-                    <Image
-                      src="/Rynex.png"
-                      alt="RYNEX"
-                      width={28}
-                      height={28}
-                      className="h-5 w-auto"
-                      priority
-                    />
-                    <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">RYNEX</span>
-                      <span className="text-muted-foreground truncate text-[11px]">
-                        Dashboard
-                      </span>
-                    </div>
-                    <ChevronDown className="ml-auto h-4 w-4" />
-                  </Link>
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-(--radix-dropdown-menu-trigger-width)"
-                align="start"
-              >
-                <DropdownMenuLabel>RYNEX</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <span>Dashboard</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Workspace</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <SidebarMenuButton size="lg" asChild>
+              <Link href="/dashboard">
+                <Image
+                  src="/Rynex.png"
+                  alt="RYNEX"
+                  width={28}
+                  height={28}
+                  className="h-5 w-auto"
+                  priority
+                />
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-medium">RYNEX</span>
+                  <span className="truncate text-xs">Dashboard</span>
+                </div>
+              </Link>
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {navItems.map((item) => (
-                <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={isActive(item.href)}
-                    tooltip={item.label}
-                  >
-                    <Link href={item.href}>
-                      <item.icon />
-                      <span>{item.label}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <Collapsible defaultOpen className="group/collapsible">
-          <SidebarGroup>
-            <SidebarGroupLabel asChild>
-              <CollapsibleTrigger>
-                General
-                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {generalNavItems.map((item) => (
-                    <SidebarMenuItem key={item.href}>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={isActive(item.href)}
-                        tooltip={item.label}
-                      >
-                        <Link href={item.href}>
-                          <item.icon />
-                          <span>{item.label}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
-
-        <Collapsible defaultOpen className="group/collapsible">
-          <SidebarGroup>
-            <SidebarGroupLabel asChild>
-              <CollapsibleTrigger>
-                POS
-                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {posNavItems.map((item) => (
-                    <SidebarMenuItem key={item.href}>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={isActive(item.href)}
-                        tooltip={item.label}
-                      >
-                        <Link href={item.href}>
-                          <item.icon />
-                          <span>{item.label}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
-
-        <Collapsible defaultOpen className="group/collapsible">
-          <SidebarGroup>
-            <SidebarGroupLabel asChild>
-              <CollapsibleTrigger>
-                Showcase
-                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {showcaseNavItems.map((item) => (
-                    <SidebarMenuItem key={item.href}>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={isActive(item.href)}
-                        tooltip={item.label}
-                      >
-                        <Link href={item.href}>
-                          <item.icon />
-                          <span>{item.label}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
+        <NavMain items={navMain} />
+        <NavSecondary items={navSecondary} className="mt-auto" />
       </SidebarContent>
-
       <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton
-                  size="lg"
-                  isActive={isActive("/dashboard/settings")}
-                  tooltip="Pengaturan"
-                >
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback>AD</AvatarFallback>
-                  </Avatar>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">Admin</span>
-                    <span className="text-muted-foreground truncate text-[11px]">
-                      admin@rynex.id
-                    </span>
-                  </div>
-                  <ChevronDown className="ml-auto h-4 w-4" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-(--radix-dropdown-menu-trigger-width)"
-                side="top"
-              >
-                <DropdownMenuLabel>Admin Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard/settings">
-                    <Settings className="mr-2 h-4 w-4" />
-                    Pengaturan
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onSelect={() => {
-                    fetch("/api/admin/auth/logout", { method: "POST" }).then(
-                      () => {
-                        window.location.href = "/login";
-                      },
-                    );
-                  }}
-                >
-                  Log out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        {user && <NavUser user={user} />}
       </SidebarFooter>
     </Sidebar>
   );
