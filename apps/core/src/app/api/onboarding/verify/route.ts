@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
 
     await db
       .update(adminUsers)
-      .set({ licenseAttempts: 0 })
+      .set({ licenseVerified: true, licenseAttempts: 0 })
       .where(eq(adminUsers.id, user.id));
 
     try {

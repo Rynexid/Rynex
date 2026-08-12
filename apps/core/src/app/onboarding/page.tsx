@@ -1,6 +1,6 @@
 "use client";
 
-import { Key, Loader2, Send, ShieldAlert, ShieldCheck } from "lucide-react";
+import { Key, Loader2, MessageCircle, Send, ShieldAlert, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -22,6 +22,7 @@ export default function OnboardingPage() {
   const [state, setState] = useState<VerifyState>("idle");
   const [attemptsLeft, setAttemptsLeft] = useState(3);
   const [message, setMessage] = useState("");
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     fetch("/api/admin/auth/session")
@@ -29,9 +30,13 @@ export default function OnboardingPage() {
       .then((data) => {
         if (!data?.user) {
           window.location.href = "/register";
-        } else if (data.user.licenseVerified) {
-          window.location.href = "/dashboard";
+          return;
         }
+        if (data.user.licenseVerified) {
+          window.location.href = "/dashboard";
+          return;
+        }
+        setUserName(data.user.name || "");
       })
       .catch(() => {
         window.location.href = "/register";
@@ -78,7 +83,7 @@ export default function OnboardingPage() {
       setMessage("Lisensi berhasil diverifikasi!");
 
       const waText = encodeURIComponent(
-        `Halo, lisensi admin RYNEX telah diverifikasi. License: ${key.trim()} | Plan: ${data.plan || "admin"} | Email: ${data.email || ""}`
+        `Halo, lisensi admin RYNEX telah diverifikasi. License: ${key.trim()} | Plan: ${data.plan || "admin"} | Email: ${data.email || ""}`,
       );
       window.open(`https://wa.me/6289508888317?text=${waText}`, "_blank");
 
@@ -90,6 +95,14 @@ export default function OnboardingPage() {
       setMessage("Gagal memverifikasi lisensi");
       toast.error("Gagal memverifikasi lisensi");
     }
+  };
+
+  const handleRequestLicense = () => {
+    const name = userName || "Admin";
+    const text = encodeURIComponent(
+      `Halo Rynex, saya ${name} baru login, bisa bantu saya berikan licensinya untuk login ini?`,
+    );
+    window.open(`https://wa.me/6289508888317?text=${text}`, "_blank");
   };
 
   return (
@@ -154,6 +167,15 @@ export default function OnboardingPage() {
                   <Send className="mr-2 h-4 w-4" />
                 )}
                 Verifikasi Lisensi
+              </Button>
+
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={handleRequestLicense}
+              >
+                <MessageCircle className="mr-2 h-4 w-4" />
+                Minta Lisensi via WhatsApp
               </Button>
 
               {state === "error" && (
