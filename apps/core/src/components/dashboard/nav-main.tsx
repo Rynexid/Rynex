@@ -1,11 +1,11 @@
 "use client";
 
 import { type LucideIcon } from "lucide-react";
+import Link from "next/link";
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
@@ -35,20 +35,25 @@ export function NavMain({
 
           return (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild isActive={item.isActive} tooltip={item.title}>
-                <a href={item.url}>
-                  <item.icon />
-                  <span>{item.title}</span>
-                </a>
-              </SidebarMenuButton>
+              <Link
+                href={item.url}
+                className={`flex items-center gap-3 rounded-md px-2 py-2 text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${
+                  item.isActive
+                    ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                    : "text-sidebar-foreground"
+                }`}
+              >
+                <item.icon className="h-4 w-4 shrink-0" />
+                <span>{item.title}</span>
+              </Link>
               {hasSubItems && (
                 <SidebarMenuSub>
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
+                        <Link href={subItem.url}>
                           <span>{subItem.title}</span>
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}
