@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { randomUUID } from "crypto";
 import { db } from "@rynex/db";
 import { adminSessions, adminUsers } from "@rynex/db";
-import { eq, and, lt } from "drizzle-orm";
+import { eq, and, gt } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
 const SESSION_COOKIE_NAME = "admin.session_token";
@@ -96,7 +96,7 @@ export async function getAdminSession() {
     .where(
       and(
         eq(adminSessions.id, token),
-        lt(adminSessions.expiresAt, new Date()),
+        gt(adminSessions.expiresAt, new Date()),
       ),
     )
     .limit(1);
