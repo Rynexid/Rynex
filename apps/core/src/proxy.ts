@@ -20,7 +20,13 @@ export function proxy(request: NextRequest) {
       pathname === "/register" ||
       pathname === "/onboarding";
 
-    if (!sessionToken && !isPublicAuthPage) {
+    const isPublicAuthApi =
+      pathname === "/api/admin/auth/login" ||
+      pathname === "/api/admin/auth/register" ||
+      pathname === "/api/admin/auth/session" ||
+      pathname === "/api/admin/auth/logout";
+
+    if (!sessionToken && !isPublicAuthPage && !isPublicAuthApi) {
       const loginUrl = new URL("/login", `https://${hostname}`);
       loginUrl.searchParams.set(
         "callbackUrl",
