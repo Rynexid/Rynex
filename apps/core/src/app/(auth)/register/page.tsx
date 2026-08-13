@@ -78,9 +78,7 @@ export default function RegisterPage() {
                 id="name"
                 placeholder="Nama Lengkap"
                 value={form.name}
-                onChange={(e) =>
-                  setForm({ ...form, name: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
               />
             </div>
 
@@ -91,9 +89,7 @@ export default function RegisterPage() {
                 type="email"
                 placeholder="nama@email.com"
                 value={form.email}
-                onChange={(e) =>
-                  setForm({ ...form, email: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
               />
             </div>
 
@@ -105,9 +101,7 @@ export default function RegisterPage() {
                   type={showPassword ? "text" : "password"}
                   placeholder="Minimal 6 karakter"
                   value={form.password}
-                  onChange={(e) =>
-                    setForm({ ...form, password: e.target.value })
-                  }
+                  onChange={(e) => setForm({ ...form, password: e.target.value })}
                 />
                 <button
                   type="button"
@@ -130,9 +124,7 @@ export default function RegisterPage() {
                 type="password"
                 placeholder="Ulangi password"
                 value={form.confirmPassword}
-                onChange={(e) =>
-                  setForm({ ...form, confirmPassword: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
               />
             </div>
 

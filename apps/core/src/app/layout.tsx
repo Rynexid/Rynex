@@ -1,40 +1,38 @@
-import "@/styles/globals.css";
-
 import type { Metadata } from "next";
-import { Toaster } from "sonner";
+import { Geist, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import "./globals.css";
 
-import { ThemeProvider } from "@/components/shared/themeProvider";
+const geistSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
-  title: {
-    default: "RYNEX Dashboard",
-    template: `%s | RYNEX Dashboard`,
-  },
-  description: "RYNEX internal dashboard and management system.",
-  robots: { index: false, follow: false },
+  title: "RYNEX Admin",
+  description: "RYNEX Admin Dashboard",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="id" suppressHydrationWarning>
-      <body className="bg-background text-foreground min-h-screen font-sans antialiased">
-        <ThemeProvider>
-          {children}
-          <Toaster
-            position="bottom-right"
-            toastOptions={{
-              style: {
-                background: "color-mix(in srgb, var(--card) 95%, transparent)",
-                border: "1px solid var(--border)",
-                backdropFilter: "blur(20px)",
-              },
-            }}
-          />
-        </ThemeProvider>
+      <body
+        className={`${geistSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased`}
+      >
+        {children}
       </body>
     </html>
   );
