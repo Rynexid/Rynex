@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.4.0] — 2026-10-26
+
+### Changed
+- Consolidated Next.js app to root `/Rynex` (removed `apps/*`)
+- Merged former `apps/core` into root app
+- Navbar simplified (removed "Lainnya" dropdown)
+- Accent color updated to `#2563EB`
+- Package manager switched to Bun
+- Added Google site verification metadata
+
+### Added
+- `@better-auth/infra` dependency
+- `.env.local` from `.env.example`
+
+
 ## [0.3.1] — 2026-06-23
 
 ### Added

@@ -1,0 +1,58 @@
+/* Rynex POS / OS Design System tokens */
+/* Import in POS layout only — scoped to .pos-theme */
+
+.pos-theme {
+  --pos-surface: #131315;
+  --pos-surface-dim: #131315;
+  --pos-surface-bright: #39393b;
+  --pos-surface-container-lowest: #0e0e10;
+  --pos-surface-container-low: #1c1b1d;
+  --pos-surface-container: #201f22;
+  --pos-surface-container-high: #2a2a2c;
+  --pos-surface-container-highest: #353437;
+  --pos-on-surface: #e5e1e4;
+  --pos-on-surface-variant: #c2c6d6;
+  --pos-inverse-surface: #e5e1e4;
+  --pos-inverse-on-surface: #313032;
+  --pos-outline: #8c909f;
+  --pos-outline-variant: #27272a;
+  --pos-surface-tint: #adc6ff;
+  --pos-primary: #adc6ff;
+  --pos-on-primary: #002e6a;
+  --pos-primary-container: #4d8eff;
+  --pos-on-primary-container: #00285d;
+  --pos-inverse-primary: #005ac2;
+  --pos-secondary: #4ae176;
+  --pos-on-secondary: #003915;
+  --pos-secondary-container: #00b954;
+  --pos-on-secondary-container: #004119;
+  --pos-tertiary: #ffb95f;
+  --pos-on-tertiary: #472a00;
+  --pos-tertiary-container: #ca8100;
+  --pos-on-tertiary-container: #3e2400;
+  --pos-error: #ffb4ab;
+  --pos-on-error: #690005;
+  --pos-error-container: #93000a;
+  --pos-on-error-container: #ffdad6;
+  --pos-background: #09090b;
+  --pos-on-background: #e5e1e4;
+}
+
+@utility pos-glass {
+  background: rgba(17, 17, 19, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--pos-outline-variant);
+}
+
+@utility pos-card {
+  background: #111113;
+  border: 1px solid var(--pos-outline-variant);
+  border-radius: 16px;
+}
+
+@utility pos-card-hover {
+  &:hover {
+    border-color: color-mix(in srgb, var(--pos-primary) 50%, transparent);
+    transition: border-color 0.2s;
+  }
+}

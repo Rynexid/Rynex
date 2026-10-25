@@ -1,0 +1,11 @@
+[
+  {
+    "id": "rynex",
+    "name": "RYNEX",
+    "type": "platform",
+    "description": "Premium digital engineering platform. Builds websites, dashboards, and scalable digital solutions.",
+    "logo": "/Rynex.png",
+    "website": "/",
+    "featured": true
+  }
+]
