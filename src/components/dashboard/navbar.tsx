@@ -22,12 +22,6 @@ export function TopNavbar({
           <Menu className="h-4 w-4" />
         </Button>
       </div>
-
-      <div className="flex items-center gap-2">
-        <span className="text-muted-foreground text-xs">
-          Admin Dashboard
-        </span>
-      </div>
     </header>
   );
 }

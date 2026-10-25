@@ -1,14 +1,37 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import * as React from "react"
+import { useRouter } from "next/navigation"
+import {
+  IconDashboard,
+  IconListDetails,
+  IconChartBar,
+  IconFolder,
+  IconUsers,
+  IconDatabase,
+  IconReport,
+  IconFileWord,
+  IconSettings,
+  IconHelp,
+  IconSearch,
+  IconInnerShadowTop,
+} from "@tabler/icons-react"
 
-import { Button } from "@rynex/ui/button";
+import { Button } from "@rynex/ui/button"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar"
 
 const navItems = [
-  { title: "Dashboard", href: "/dashboard", icon: "📊" },
-  { title: "Lifecycle", href: "/dashboard/lifecycle", icon: "🔄" },
-  { title: "Analytics", href: "/dashboard/analytics", icon: "📈" },
+  { title: "Dashboard", href: "/dashboard", icon: IconDashboard },
+  { title: "Lifecycle", href: "/dashboard/lifecycle", icon: IconListDetails },
+  { title: "Analytics", href: "/dashboard/analytics", icon: IconChartBar },
   { title: "Products", href: "/dashboard/products", icon: "📦" },
   { title: "Projects", href: "/dashboard/projects", icon: "📁" },
   { title: "Team", href: "/dashboard/team", icon: "👥" },
@@ -18,7 +41,7 @@ const navItems = [
   { title: "Word Assistant", href: "/dashboard/word-assistant", icon: "🤖" },
   { title: "Settings", href: "/dashboard/settings", icon: "⚙️" },
   { title: "Search", href: "/dashboard/search", icon: "🔍" },
-];
+]
 
 export function AppSidebar({
   open,
@@ -27,54 +50,59 @@ export function AppSidebar({
   open: boolean;
   onToggle: () => void;
 }) {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
-    <aside
-      className={`fixed inset-y-0 left-0 z-20 flex flex-col border-r border-white/10 bg-black/40 backdrop-blur-xl transition-all duration-200 ${
-        open ? "w-64" : "w-0 overflow-hidden"
-      }`}
-    >
-      <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
-        <span className="font-mono text-lg font-bold tracking-wider">RYNEX</span>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onToggle}
-          className="h-8 w-8"
-        >
-          ✕
-        </Button>
-      </div>
-
-      <nav className="flex-1 overflow-y-auto p-3 space-y-1">
-        {navItems.map((item) => (
-          <a
-            key={item.title}
-            href={item.href}
-            onClick={(e) => {
-              e.preventDefault();
-              router.push(item.href);
-            }}
-            className="flex items-center gap-2 mb-1 block rounded-md px-3 py-2 text-sm text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
-          >
-            <span>{item.icon}</span>
-            {item.title}
-          </a>
-        ))}
-      </nav>
-
-      <div className="border-t border-white/10 p-3">
+    <Sidebar collapsible="offcanvas" className="w-64">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              onClick={onToggle}
+              className="h-16 justify-between px-4"
+            >
+              <a href="#" className="flex items-center gap-2">
+                <span className="size-5">⚡</span>
+                <span className="text-base font-semibold">Acme Inc.</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarMenu>
+          {navItems.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton
+                asChild
+                onClick={() => router.push(item.href)}
+                className="gap-2"
+              >
+                <a href={item.href} onClick={(e) => { e.preventDefault(); router.push(item.href); }}>
+                  {typeof item.icon === "string" ? (
+                    <span className="size-5">{item.icon}</span>
+                  ) : (
+                    <item.icon className="size-5" />
+                  )}
+                  <span>{item.title}</span>
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarContent>
+      <SidebarFooter>
         <button
           onClick={async () => {
-            await fetch("/api/admin/auth/logout", { method: "POST" });
-            router.push("/login");
+            await fetch("/api/admin/auth/logout", { method: "POST" })
+            window.location.href = "/login"
           }}
           className="w-full rounded-md border border-white/10 px-3 py-2 text-sm text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
         >
           Log out
         </button>
-      </div>
-    </aside>
-  );
+      </SidebarFooter>
+    </Sidebar>
+  )
 }
