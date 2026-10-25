@@ -33,14 +33,7 @@ export const auth = betterAuth({
           },
         }
       : {}),
-    ...(process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET
-      ? {
-          google: {
-            clientId: process.env.AUTH_GOOGLE_ID,
-            clientSecret: process.env.AUTH_GOOGLE_SECRET,
-          },
-        }
-      : {}),
+
   },
   plugins: [
     admin({
