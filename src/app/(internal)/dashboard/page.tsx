@@ -1,50 +1,40 @@
-"use client";
+import { AppSidebar } from "@/components/app-sidebar"
+import { ChartAreaInteractive } from "@/components/chart-area-interactive"
+import { DataTable } from "@/components/data-table"
+import { SectionCards } from "@/components/section-cards"
+import { SiteHeader } from "@/components/site-header"
+import {
+  SidebarInset,
+  SidebarProvider,
+} from "@/components/ui/sidebar"
 
-import { useEffect, useState } from "react";
+import data from "./data.json"
 
-export default function DashboardPage() {
-  const [data, setData] = useState<{ totalRevenue: number; totalOrders: number; totalLicenses: number; activeLicenses: number; totalProducts: number; totalUsers: number; failedVerifications: number; pendingActivations: number } | null>(null);
-
-  useEffect(() => {
-    fetch("/api/dashboard")
-      .then((r) => r.json())
-      .then(setData)
-      .catch(() => {});
-  }, []);
-
+export default function Page() {
   return (
-    <div className="flex-1 space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-[#e5e1e4]">Dashboard</h1>
-        <p className="text-muted-foreground mt-1 text-sm">
-          Overview sistem dan metrik bisnis RYNEX
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <DashboardCard title="Total Pendapatan" value={data ? `Rp ${data.totalRevenue.toLocaleString("id-ID")}` : "Rp 12.430.000"} />
-        <DashboardCard title="Pesanan Aktif" value={data ? data.totalOrders.toString() : "24"} />
-        <DashboardCard title="Total Lisensi" value={data ? data.totalLicenses.toString() : "18"} />
-        <DashboardCard title="Gagal Verifikasi" value={data ? data.failedVerifications.toString() : "3"} />
-      </div>
-
-      {data && (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <DashboardCard title="Produk" value={data.totalProducts.toString()} />
-          <DashboardCard title="Pengguna" value={data.totalUsers.toString()} />
-          <DashboardCard title="Lisensi Aktif" value={data.activeLicenses.toString()} />
-          <DashboardCard title="Pending Aktivasi" value={data.pendingActivations.toString()} />
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)",
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+              <SectionCards />
+              <div className="px-4 lg:px-6">
+                <ChartAreaInteractive />
+              </div>
+              <DataTable data={data} />
+            </div>
+          </div>
         </div>
-      )}
-    </div>
-  );
-}
-
-function DashboardCard({ title, value }: { title: string; value: string }) {
-  return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-      <p className="text-muted-foreground text-xs uppercase tracking-wider">{title}</p>
-      <p className="mt-2 text-2xl font-bold text-white">{value}</p>
-    </div>
-  );
+      </SidebarInset>
+    </SidebarProvider>
+  )
 }
