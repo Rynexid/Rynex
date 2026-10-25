@@ -8,9 +8,12 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar"
 
-import data from "./data.json"
+import { db, products, licenses } from "@rynex/db"
+import { count } from "drizzle-orm"
 
-export default function Page() {
+export default async function Page() {
+  const [{ value: productCount }] = await db.select({ value: count() }).from(products)
+  const [{ value: licenseCount }] = await db.select({ value: count() }).from(licenses)
   return (
     <SidebarProvider
       style={
@@ -26,11 +29,21 @@ export default function Page() {
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+              <div className="grid gap-4 px-4 lg:px-6 md:grid-cols-2">
+                <div className="rounded-xl border p-4">
+                  <div className="text-sm text-muted-foreground">Products</div>
+                  <div className="text-2xl font-bold">{productCount}</div>
+                </div>
+                <div className="rounded-xl border p-4">
+                  <div className="text-sm text-muted-foreground">Licenses</div>
+                  <div className="text-2xl font-bold">{licenseCount}</div>
+                </div>
+              </div>
               <SectionCards />
               <div className="px-4 lg:px-6">
                 <ChartAreaInteractive />
               </div>
-              <DataTable data={data} />
+              <DataTable data={[]} />
             </div>
           </div>
         </div>
