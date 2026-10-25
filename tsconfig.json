@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "target": "ES2017",
     "lib": [
@@ -6,17 +7,13 @@
       "dom.iterable",
       "esnext"
     ],
-    "types": [],
     "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
     "noEmit": true,
-    "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "incremental": true,
     "plugins": [
       {
@@ -26,16 +23,35 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@rynex/ui/*": [
+        "../../packages/ui/src/*"
+      ],
+      "@rynex/ui": [
+        "../../packages/ui/src"
+      ],
+      "@rynex/db": [
+        "../../packages/db/src"
+      ],
+      "@rynex/auth": [
+        "../../packages/auth/src"
+      ],
+      "@rynex/types": [
+        "../../packages/types/src"
+      ],
+      "@rynex/config": [
+        "../../packages/config/src"
+      ],
+      "@rynex/utils": [
+        "../../packages/utils/src"
       ]
     }
   },
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "src/types/**/*.d.ts"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
