@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.4.2] — 2026-10-26
+
+### Added
+- Real data pages: products, licenses, orders, projects, team, analytics, content
+- DB tables: projects, team_members
+
+### Changed
+- Dashboard uses shadcn dashboard-01 (single sidebar)
+- Auth: Better Auth baseURL/trustedOrigins, drizzle schema passed directly
+
+
 ## [0.4.1] — 2026-10-26
 
 ### Changed
