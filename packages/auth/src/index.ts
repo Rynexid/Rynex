@@ -1,5 +1,6 @@
 import { drizzleAdapter } from "@better-auth/drizzle-adapter";
 import { betterAuth } from "better-auth";
+import { dash } from "@better-auth/infra";
 import { admin } from "better-auth/plugins";
 
 import { db } from "@rynex/db";
@@ -36,6 +37,7 @@ export const auth = betterAuth({
 
   },
   plugins: [
+    dash(),
     admin({
       ac,
       roles: {
