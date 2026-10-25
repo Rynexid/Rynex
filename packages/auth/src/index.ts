@@ -16,6 +16,7 @@ export const auth = betterAuth({
   trustedOrigins: process.env.BETTER_AUTH_URL ? [process.env.BETTER_AUTH_URL] : undefined,
   database: drizzleAdapter(db, {
     provider: "pg",
+    usePlural: true,
     schema: {
       user: "auth.users",
       session: "auth.sessions",
