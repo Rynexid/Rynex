@@ -6,13 +6,18 @@ import { useRouter } from "next/navigation";
 import { Button } from "@rynex/ui/button";
 
 const navItems = [
-  { title: "Dashboard", href: "/dashboard" },
-  { title: "Lisensi", href: "/dashboard/licenses" },
-  { title: "Produk", href: "/dashboard/products" },
-  { title: "Pesanan", href: "/dashboard/orders" },
-  { title: "Analitik", href: "/dashboard/analytics" },
-  { title: "Konten", href: "/dashboard/content" },
-  { title: "Pengaturan", href: "/dashboard/settings" },
+  { title: "Dashboard", href: "/dashboard", icon: "📊" },
+  { title: "Lifecycle", href: "/dashboard/lifecycle", icon: "🔄" },
+  { title: "Analytics", href: "/dashboard/analytics", icon: "📈" },
+  { title: "Products", href: "/dashboard/products", icon: "📦" },
+  { title: "Projects", href: "/dashboard/projects", icon: "📁" },
+  { title: "Team", href: "/dashboard/team", icon: "👥" },
+  { title: "Documents", href: "/dashboard/documents", icon: "📄" },
+  { title: "Data Library", href: "/dashboard/data-library", icon: "🗂️" },
+  { title: "Reports", href: "/dashboard/reports", icon: "📋" },
+  { title: "Word Assistant", href: "/dashboard/word-assistant", icon: "🤖" },
+  { title: "Settings", href: "/dashboard/settings", icon: "⚙️" },
+  { title: "Search", href: "/dashboard/search", icon: "🔍" },
 ];
 
 export function AppSidebar({
@@ -42,7 +47,7 @@ export function AppSidebar({
         </Button>
       </div>
 
-      <nav className="flex-1 overflow-y-auto p-3">
+      <nav className="flex-1 overflow-y-auto p-3 space-y-1">
         {navItems.map((item) => (
           <a
             key={item.title}
@@ -51,8 +56,9 @@ export function AppSidebar({
               e.preventDefault();
               router.push(item.href);
             }}
-            className="mb-1 block rounded-md px-3 py-2 text-sm text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
+            className="flex items-center gap-2 mb-1 block rounded-md px-3 py-2 text-sm text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
           >
+            <span>{item.icon}</span>
             {item.title}
           </a>
         ))}
