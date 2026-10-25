@@ -2,7 +2,7 @@ import { drizzleAdapter } from "@better-auth/drizzle-adapter";
 import { betterAuth } from "better-auth";
 import { admin } from "better-auth/plugins";
 
-import { db } from "@rynex/db";
+import { db, schema } from "@rynex/db";
 import {
   ac,
   customer,
@@ -17,12 +17,7 @@ export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
     usePlural: true,
-    schema: {
-      user: "auth.users",
-      session: "auth.sessions",
-      account: "auth.accounts",
-      verification: "auth.verifications",
-    },
+    schema,
   }),
   emailAndPassword: {
     enabled: true,
