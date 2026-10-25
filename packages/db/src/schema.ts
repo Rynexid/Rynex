@@ -126,6 +126,7 @@ export const products = coresSchema.table("products", {
   type: varchar("type", { length: 50 }).notNull().default("template"),
   version: varchar("version", { length: 50 }).notNull().default("1.0.0"),
   price: integer("price").notNull().default(0),
+  status: varchar("status", { length: 50 }).notNull().default("draft"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -167,6 +168,22 @@ export const orders = coresSchema.table("orders", {
     .default("pending"),
   paymentProvider: varchar("payment_provider", { length: 50 }),
   purchasedAt: timestamp("purchased_at").defaultNow(),
+});
+
+export const projects = coresSchema.table("projects", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  status: varchar("status", { length: 50 }).notNull().default("active"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const teamMembers = coresSchema.table("team_members", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  role: varchar("role", { length: 100 }),
+  email: varchar("email", { length: 255 }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const nodes = coresSchema.table("nodes", {

@@ -22,6 +22,8 @@ export {
   licenses,
   activations,
   orders,
+  projects,
+  teamMembers,
   nodes,
   outbox,
   comments,

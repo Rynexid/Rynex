@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.4.3] — 2026-10-26
+
+### Added
+- Products module: full CRUD with list, create, edit, delete, search, filter, pagination
+- Product publication status (draft/published) with database schema migration
+- Public products catalog integrated with published products
+- Server Actions for product operations (get, create, update, delete)
+- Dashboard analytics with real data counts
+
+### Changed
+- Products schema: added status field (draft/published)
+- Public products page now fetches from database
+
+
 ## [0.4.2] — 2026-10-26
 
 ### Added

@@ -1,6 +1,6 @@
 {
   "name": "rynex",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack --port 3000",
@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@neondatabase/serverless": "^1.0.2",
+    "@next/eslint-plugin-next": "^16.4.3",
     "@rynex/auth": "workspace:^",
     "@rynex/config": "workspace:*",
     "@rynex/db": "workspace:*",
@@ -24,8 +25,12 @@
     "@types/node": "25.6.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "^19",
+    "@typescript-eslint/eslint-plugin": "^8.72.0",
+    "@typescript-eslint/parser": "^8.72.0",
     "bcryptjs": "^2.4.3",
     "eslint": "^9.29.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
     "tailwindcss": "^4.3.3",
     "typescript": "6.0.3"
   },
