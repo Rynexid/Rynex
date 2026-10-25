@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.1] — 2026-10-26
+
+### Changed
+- Switched package manager back to pnpm
+- Login/signup pages updated to Rynex branding
+- Google site verification via meta tags only
+
+### Added
+- shadcn login-02 and signup-02 blocks
+- `dash()` plugin for Better Auth infra
+
+
 ## [0.4.0] — 2026-10-26
 
 ### Changed
