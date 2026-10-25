@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     "Rynex Studio",
   ],
   robots: { index: true, follow: true },
-  verification: { google: "6Fu34BupR3UVuzu1i8BkGgAw8qMM8G_qMW1jiFd15WQ" },
+  verification: { google: ["6Fu34BupR3UVuzu1i8BkGgAw8qMM8G_qMW1jiFd15WQ", "aLhCVgyHbYF7fCoXRtB0rinI_D-SBSKIlIsRJgB9f4c"] },
   icons: {
     icon: "/favicon/favicon.ico",
     shortcut: "/favicon/favicon-16x16.png",
