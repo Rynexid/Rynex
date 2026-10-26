@@ -1,40 +1,37 @@
-import { db, products, licenses, orders, projects } from "@rynex/db"
-import { count } from "drizzle-orm"
+import { AppSidebar } from "@/components/app-sidebar";
+import { ChartAreaInteractive } from "@/components/chart-area-interactive";
+import { DataTable } from "@/components/data-table";
+import { SectionCards } from "@/components/section-cards";
+import { SiteHeader } from "@/components/site-header";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
-import { SectionCards } from "@/components/section-cards"
-import { ChartAreaInteractive } from "@/components/chart-area-interactive"
-import { DataTable } from "@/components/data-table"
+import data from "./data.json";
 
-export default async function Page() {
-  const [{ value: productCount }] = await db.select({ value: count() }).from(products)
-  const [{ value: licenseCount }] = await db.select({ value: count() }).from(licenses)
-  const [{ value: orderCount }] = await db.select({ value: count() }).from(orders)
-  const [{ value: projectCount }] = await db.select({ value: count() }).from(projects)
-
+export default function Page() {
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-xl border p-4">
-          <div className="text-sm text-muted-foreground">Products</div>
-          <div className="text-2xl font-bold">{productCount}</div>
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)",
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+              <SectionCards />
+              <div className="px-4 lg:px-6">
+                <ChartAreaInteractive />
+              </div>
+              <DataTable data={data} />
+            </div>
+          </div>
         </div>
-        <div className="rounded-xl border p-4">
-          <div className="text-sm text-muted-foreground">Licenses</div>
-          <div className="text-2xl font-bold">{licenseCount}</div>
-        </div>
-        <div className="rounded-xl border p-4">
-          <div className="text-sm text-muted-foreground">Orders</div>
-          <div className="text-2xl font-bold">{orderCount}</div>
-        </div>
-        <div className="rounded-xl border p-4">
-          <div className="text-sm text-muted-foreground">Projects</div>
-          <div className="text-2xl font-bold">{projectCount}</div>
-        </div>
-      </div>
-      <SectionCards />
-      <ChartAreaInteractive />
-      <DataTable data={[]} />
-    </div>
-  )
+      </SidebarInset>
+    </SidebarProvider>
+  );
 }

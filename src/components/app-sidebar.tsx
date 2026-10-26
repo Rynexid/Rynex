@@ -1,163 +1,181 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useRouter } from "next/navigation"
 import {
-  LayoutDashboard,
-  RefreshCw,
-  BarChart2,
-  Package,
-  FolderOpen,
-  Users,
-  Database,
-  FileText,
-  Bot,
-  Settings,
-  HelpCircle,
-  Search,
-  Mail,
-  Plus,
-  X,
-  Menu,
-  ChevronLeft,
-  ChevronRight,
-  RefreshCw as RefreshCwIcon,
-} from "lucide-react"
+  IconCamera,
+  IconChartBar,
+  IconDashboard,
+  IconDatabase,
+  IconFileAi,
+  IconFileDescription,
+  IconFileWord,
+  IconFolder,
+  IconHelp,
+  IconInnerShadowTop,
+  IconListDetails,
+  IconReport,
+  IconSearch,
+  IconSettings,
+  IconUsers,
+} from "@tabler/icons-react";
+import * as React from "react";
 
-import { Button } from "@/components/ui/button"
+import { NavDocuments } from "@/components/nav-documents";
+import { NavMain } from "@/components/nav-main";
+import { NavSecondary } from "@/components/nav-secondary";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
-const navMain = [
-  { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { title: "Lifecycle", href: "/dashboard/lifecycle", icon: RefreshCwIcon },
-  { title: "Analytics", href: "/dashboard/analytics", icon: BarChart2 },
-  { title: "Products", href: "/dashboard/products", icon: Package },
-  { title: "Projects", href: "/dashboard/projects", icon: FolderOpen },
-  { title: "Team", href: "/dashboard/team", icon: Users },
-]
+const data = {
+  user: {
+    name: "shadcn",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
+  },
+  navMain: [
+    {
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: IconDashboard,
+    },
+    {
+      title: "Lifecycle",
+      url: "/dashboard",
+      icon: IconListDetails,
+    },
+    {
+      title: "Analytics",
+      url: "/dashboard",
+      icon: IconChartBar,
+    },
+    {
+      title: "Projects",
+      url: "/dashboard",
+      icon: IconFolder,
+    },
+    {
+      title: "Team",
+      url: "/dashboard",
+      icon: IconUsers,
+    },
+  ],
+  navClouds: [
+    {
+      title: "Capture",
+      icon: IconCamera,
+      isActive: true,
+      url: "/dashboard",
+      items: [
+        {
+          title: "Active Proposals",
+          url: "/dashboard",
+        },
+        {
+          title: "Archived",
+          url: "/dashboard",
+        },
+      ],
+    },
+    {
+      title: "Proposal",
+      icon: IconFileDescription,
+      url: "/dashboard",
+      items: [
+        {
+          title: "Active Proposals",
+          url: "/dashboard",
+        },
+        {
+          title: "Archived",
+          url: "/dashboard",
+        },
+      ],
+    },
+    {
+      title: "Prompts",
+      icon: IconFileAi,
+      url: "/dashboard",
+      items: [
+        {
+          title: "Active Proposals",
+          url: "/dashboard",
+        },
+        {
+          title: "Archived",
+          url: "/dashboard",
+        },
+      ],
+    },
+  ],
+  navSecondary: [
+    {
+      title: "Settings",
+      url: "/dashboard",
+      icon: IconSettings,
+    },
+    {
+      title: "Get Help",
+      url: "/dashboard",
+      icon: IconHelp,
+    },
+    {
+      title: "Search",
+      url: "/dashboard",
+      icon: IconSearch,
+    },
+  ],
+  documents: [
+    {
+      name: "Data Library",
+      url: "/dashboard",
+      icon: IconDatabase,
+    },
+    {
+      name: "Reports",
+      url: "/dashboard",
+      icon: IconReport,
+    },
+    {
+      name: "Word Assistant",
+      url: "/dashboard",
+      icon: IconFileWord,
+    },
+  ],
+};
 
-const navDocuments = [
-  { name: "Data Library", href: "/dashboard/data-library", icon: Database },
-  { name: "Reports", href: "/dashboard/reports", icon: FileText },
-  { name: "Word Assistant", href: "/dashboard/word-assistant", icon: Bot },
-]
-
-const navSecondary = [
-  { title: "Settings", href: "/dashboard/settings", icon: Settings },
-  { title: "Get Help", href: "/dashboard/get-help", icon: HelpCircle },
-  { title: "Search", href: "/dashboard/search", icon: Search },
-]
-
-export function AppSidebar({
-  open,
-  onToggle,
-}: {
-  open: boolean;
-  onToggle: () => void;
-}) {
-  const router = useRouter()
-
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="offcanvas" className="w-64">
+    <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
-        <SidebarGroup>
-          <SidebarGroupContent className="flex flex-col gap-2">
-            <SidebarMenu>
-              <SidebarMenuItem className="flex items-center gap-2">
-                <SidebarMenuButton
-                  tooltip="Quick Create"
-                  className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
-                >
-                  <Plus className="size-5" />
-                  <span>Quick Create</span>
-                </SidebarMenuButton>
-                <Button
-                  size="icon"
-                  className="size-8 group-data-[collapsible=icon]:opacity-0"
-                  variant="outline"
-                >
-                  <Mail className="size-5" />
-                  <span className="sr-only">Inbox</span>
-                </Button>
-              </SidebarMenuItem>
-            </SidebarMenu>
-            <SidebarMenu>
-              {navMain.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild tooltip={item.title}>
-                    <a href={item.href} onClick={(e) => { e.preventDefault(); router.push(item.href); }}>
-                      <item.icon className="size-5" />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className="data-[slot=sidebar-menu-button]:p-1.5!"
+            >
+              <a href="/dashboard">
+                <IconInnerShadowTop className="size-5!" />
+                <span className="text-base font-semibold">Rynex</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-          <SidebarGroupLabel>Documents</SidebarGroupLabel>
-          <SidebarMenu>
-            {navDocuments.map((item) => (
-              <SidebarMenuItem key={item.name}>
-                <SidebarMenuButton asChild>
-                  <a href={item.href} onClick={(e) => { e.preventDefault(); router.push(item.href); }}>
-                    <item.icon className="size-5" />
-                    <span>{item.name}</span>
-                  </a>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-            <SidebarMenuItem>
-              <SidebarMenuButton className="text-sidebar-foreground/70">
-                <span className="size-5">⋯</span>
-                <span>More</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {navSecondary.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.href} onClick={(e) => { e.preventDefault(); router.push(item.href); }}>
-                      <item.icon className="size-5" />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <NavMain items={data.navMain} />
+        <NavDocuments items={data.documents} />
+        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <button
-          onClick={async () => {
-            await fetch("/api/admin/auth/logout", { method: "POST" });
-            window.location.href = "/login";
-          }}
-          className="w-full rounded-md border border-white/10 px-3 py-2 text-sm text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
-        >
-          Log out
-        </button>
+        <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }
