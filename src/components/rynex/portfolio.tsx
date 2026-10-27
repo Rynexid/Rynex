@@ -1,100 +1,69 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight, Eye } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 import { showcaseProjects } from "@/data/showcase";
 
 export function PortfolioSection() {
-  const featured = showcaseProjects.slice(0, 6);
+  const projects = showcaseProjects.slice(0, 3);
 
   return (
-    <section className="spacious-section bg-card/30" id="portfolio">
+    <section className="py-16 md:py-24">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.5 }}
-          className="mb-10 text-center md:mb-16"
-        >
-          <span className="text-primary font-mono text-xs font-semibold tracking-widest uppercase">
-            Karya Unggulan
-          </span>
-          <h2 className="mt-4 mb-4 text-2xl font-bold md:text-4xl md:text-5xl">
-            Proyek Terbaru
-          </h2>
-          <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
-            Setiap proyek mewakili komitmen kami terhadap kualitas dan presisi.
-          </p>
-        </motion.div>
+        <div className="mb-10 flex flex-col gap-4 md:mb-12 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-primary mb-2 font-mono text-xs tracking-widest uppercase">
+              Selected Work
+            </p>
+            <h2 className="text-2xl font-semibold tracking-tight md:text-4xl">
+              Ideas, translated into real work
+            </h2>
+            <p className="text-muted-foreground mt-2 max-w-2xl text-sm md:text-base">
+              Explore selected projects and the thinking behind the digital
+              solutions we build.
+            </p>
+          </div>
+          <Link
+            href="/portfolio"
+            className="text-primary inline-flex items-center gap-2 text-sm font-medium"
+          >
+            Explore Our Work
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
 
-        <div className="mx-auto grid max-w-5xl grid-cols-2 gap-4 lg:grid-cols-3 lg:gap-6">
-          {featured.map((project, i) => (
-            <motion.div
+        <div className="grid gap-4 md:grid-cols-3">
+          {projects.map((project) => (
+            <article
               key={project.slug}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="group border-border/60 hover:border-primary/40 overflow-hidden rounded-xl border transition-colors"
             >
-              <Link
-                href={`/portfolio/${project.slug}`}
-                className="group hover:border-primary/20 flex h-full flex-col overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] transition-[background-color,border-color] duration-300 hover:bg-white/[0.04]"
-              >
-                <div className="relative aspect-[16/9] overflow-hidden">
+              <Link href={`/portfolio/${project.slug}`} className="block">
+                <div className="relative aspect-[16/10] overflow-hidden">
                   <img
                     src={project.cover}
                     alt={project.name}
                     loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.01]"
                   />
-                  <span className="bg-primary/90 text-primary-foreground absolute top-3 left-3 max-w-[calc(100%-24px)] truncate rounded-full px-3 py-1 font-mono text-[10px] font-semibold tracking-wider uppercase">
-                    {project.subcategory}
-                  </span>
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/30">
-                    <Eye className="h-6 w-6 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  </div>
                 </div>
-
-                <div className="flex flex-1 flex-col p-4 md:p-5">
-                  <h3 className="group-hover:text-primary mb-2 text-sm leading-snug font-semibold transition-colors">
-                    {project.name}
-                  </h3>
-                  <p className="text-muted-foreground mb-3 flex-1 text-xs leading-relaxed">
+                <div className="flex flex-col gap-2 p-5">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-medium">{project.name}</h3>
+                    <ExternalLink className="text-muted-foreground h-4 w-4" />
+                  </div>
+                  <p className="text-muted-foreground text-sm">
+                    {project.subcategory}
+                  </p>
+                  <p className="text-muted-foreground line-clamp-2 text-sm">
                     {project.description}
                   </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.highlights.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-primary/10 text-primary rounded-full px-2.5 py-0.5 font-mono text-[10px]"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               </Link>
-            </motion.div>
+            </article>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-12 text-center"
-        >
-          <Link href="/portfolio">
-            <span className="text-primary hover:text-primary/80 inline-flex items-center gap-2 font-mono text-sm tracking-wider uppercase transition-colors">
-              Lihat Portofolio Lengkap
-              <ArrowRight className="h-4 w-4" />
-            </span>
-          </Link>
-        </motion.div>
       </div>
     </section>
   );

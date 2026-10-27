@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@rynex/ui/button";
+import { cn } from "@rynex/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronDown, Moon, Sun } from "lucide-react";
 import Image from "next/image";
@@ -7,9 +9,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
-
-import { Button } from "@rynex/ui/button";
-import { cn } from "@rynex/utils";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -69,9 +68,8 @@ export function Navbar() {
           <div className="hidden items-center gap-1 md:flex">
             <NavLink href="/" label="Beranda" pathname={pathname} />
             <NavLink href="/services" label="Layanan" pathname={pathname} />
-            <NavLink href="/products" label="Produk" pathname={pathname} />
             <NavLink href="/portfolio" label="Portofolio" pathname={pathname} />
-            <NavLink href="/about" label="About" pathname={pathname} />
+            <NavLink href="/about" label="Tentang" pathname={pathname} />
             <NavLink href="/contact" label="Kontak" pathname={pathname} />
           </div>
 

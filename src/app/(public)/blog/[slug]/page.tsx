@@ -1,31 +1,16 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Calendar, Clock, Eye, Share2, User } from "lucide-react";
-import Link from "next/link";
+import { Calendar, Clock, Eye, User } from "lucide-react";
 import { notFound, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { BackButton } from "@/components/blog/backButton";
-import { CommentSection } from "@/components/blog/commentSection";
-import { RelatedPosts } from "@/components/blog/relatedPosts";
-import { ShareModal } from "@/components/shared/shareModal";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@rynex/ui/breadcrumb";
-import { Button } from "@rynex/ui/button";
+import { Breadcrumbs } from "@/components/editorial/breadcrumbs";
 import { posts } from "@/data/blog";
 
 export default function BlogDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const post = posts.find((p) => p.slug === slug);
   const [views, setViews] = useState(0);
-  const [shareOpen, setShareOpen] = useState(false);
 
   useEffect(() => {
     if (!post) return;
@@ -54,170 +39,153 @@ export default function BlogDetailPage() {
 
   if (!post) notFound();
 
+  const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
+
   return (
-    <div className="pt-28">
-      <article className="pb-20">
+    <main className="bg-background min-h-screen">
+      <section className="pt-24 pb-16 md:pt-28">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <BackButton title={post.title} />
-          </motion.div>
+          <div className="mx-auto max-w-4xl">
+            <Breadcrumbs
+              items={[
+                { label: "Beranda", href: "/" },
+                { label: "Blog", href: "/blog" },
+                { label: post.title },
+              ]}
+            />
 
-          <Breadcrumb className="mb-6">
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link href="/">Beranda</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link href="/blog">Blog</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>{post.title}</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+            <header className="mb-8">
+              <div className="mb-3 flex flex-wrap items-center gap-2">
+                <span className="bg-muted text-muted-foreground rounded-full px-2.5 py-0.5 text-xs">
+                  {post.category}
+                </span>
+              </div>
+              <h1 className="text-3xl font-semibold tracking-tight md:text-5xl">
+                {post.title}
+              </h1>
+              <p className="text-muted-foreground mt-3 text-base md:text-lg">
+                {post.excerpt}
+              </p>
+              <div className="text-muted-foreground mt-4 flex flex-wrap items-center gap-4 text-sm">
+                <span className="flex items-center gap-1.5">
+                  <User className="h-4 w-4" />
+                  {post.author}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Calendar className="h-4 w-4" />
+                  {post.date}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Clock className="h-4 w-4" />
+                  {post.readTime} menit baca
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Eye className="h-4 w-4" />
+                  {views} pembaca
+                </span>
+              </div>
+            </header>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mx-auto max-w-3xl"
-          >
-            <div className="relative mb-8 aspect-[2/1] overflow-hidden rounded-2xl">
+            <div className="border-border/60 mb-10 overflow-hidden rounded-xl border">
               <img
                 src={post.cover}
                 alt={post.title}
-                className="h-full w-full object-cover"
+                className="aspect-[16/9] h-full w-full object-cover"
                 loading="lazy"
               />
             </div>
 
-            <div className="mb-1.5">
-              <span className="text-primary font-mono text-[11px] tracking-wider uppercase md:text-xs">
-                {post.category}
-              </span>
-            </div>
-
-            <h1 className="mb-3 text-base leading-tight font-bold md:text-3xl">
-              {post.title}
-            </h1>
-
-            <div className="text-muted-foreground/60 mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] tracking-wider uppercase md:gap-4 md:text-xs">
-              <span className="flex items-center gap-1">
-                <User className="h-3 w-3 md:h-3.5 md:w-3.5" />
-                {post.author}
-              </span>
-              <span className="flex items-center gap-1">
-                <Calendar className="h-3 w-3 md:h-3.5 md:w-3.5" />
-                {post.date}
-              </span>
-              <span className="flex items-center gap-1">
-                <Clock className="h-3 w-3 md:h-3.5 md:w-3.5" />
-                {post.readTime} min read
-              </span>
-              <span className="flex items-center gap-1">
-                <Eye className="h-3 w-3 md:h-3.5 md:w-3.5" />
-                {views} views
-              </span>
-            </div>
-
-            <div className="prose prose-invert prose-sm md:prose-base max-w-none">
-              {post.content.split("\n").map((line, i) => {
-                if (line.startsWith("## ")) {
-                  return (
-                    <h2
-                      key={i}
-                      className="mt-8 mb-4 text-xl font-bold md:text-2xl"
-                    >
-                      {line.slice(3)}
-                    </h2>
-                  );
-                }
-                if (line.startsWith("### ")) {
-                  return (
-                    <h3 key={i} className="mt-6 mb-3 text-lg font-semibold">
-                      {line.slice(4)}
-                    </h3>
-                  );
-                }
-                if (line.startsWith("- **")) {
-                  const boldMatch = line.match(/- \*\*(.+?)\*\*(.+)/);
-                  if (boldMatch) {
+            <article className="flex flex-col gap-6">
+              <div className="prose prose-neutral dark:prose-invert max-w-none">
+                {post.content.split("\n").map((line, i) => {
+                  if (line.startsWith("## ")) {
                     return (
-                      <p key={i} className="text-muted-foreground mb-2">
-                        <strong className="text-foreground">
-                          {boldMatch[1]}
-                        </strong>
-                        {boldMatch[2]}
+                      <h2
+                        key={i}
+                        className="mt-10 mb-4 text-2xl font-semibold tracking-tight"
+                      >
+                        {line.slice(3)}
+                      </h2>
+                    );
+                  }
+                  if (line.startsWith("### ")) {
+                    return (
+                      <h3
+                        key={i}
+                        className="mt-8 mb-3 text-xl font-semibold tracking-tight"
+                      >
+                        {line.slice(4)}
+                      </h3>
+                    );
+                  }
+                  if (line.startsWith("- **")) {
+                    const boldMatch = line.match(/- \*\*(.+?)\*\*(.+)/);
+                    if (boldMatch) {
+                      return (
+                        <p key={i} className="mb-2">
+                          <strong>{boldMatch[1]}</strong>
+                          {boldMatch[2]}
+                        </p>
+                      );
+                    }
+                  }
+                  if (line.startsWith("- ")) {
+                    return (
+                      <p key={i} className="mb-1 ml-4">
+                        • {line.slice(2)}
                       </p>
                     );
                   }
-                }
-                if (line.startsWith("- ")) {
+                  if (line.startsWith("**") && line.endsWith("**")) {
+                    return (
+                      <p key={i} className="mb-2 font-semibold">
+                        {line.slice(2, -2)}
+                      </p>
+                    );
+                  }
+                  if (line.trim() === "") return <br key={i} />;
                   return (
-                    <p key={i} className="text-muted-foreground mb-1 ml-4">
-                      • {line.slice(2)}
+                    <p key={i} className="mb-4 leading-relaxed">
+                      {line}
                     </p>
                   );
-                }
-                if (line.startsWith("**") && line.endsWith("**")) {
-                  return (
-                    <p key={i} className="text-foreground mb-2 font-semibold">
-                      {line.slice(2, -2)}
-                    </p>
-                  );
-                }
-                if (line.trim() === "") return <br key={i} />;
-                return (
-                  <p
-                    key={i}
-                    className="text-muted-foreground mb-4 leading-relaxed"
-                  >
-                    {line}
-                  </p>
-                );
-              })}
-            </div>
+                })}
+              </div>
+            </article>
 
-            <div className="border-border/40 mt-12 border-t pt-8">
-              <CommentSection
-                postSlug={slug}
-                action={
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShareOpen(true)}
-                    className="shrink-0 font-mono text-xs tracking-wider uppercase"
-                  >
-                    <Share2 className="mr-1.5 h-3.5 w-3.5" />
-                    Share
-                  </Button>
-                }
-              />
-            </div>
-          </motion.div>
-
-          <div className="mt-16">
-            <RelatedPosts currentSlug={slug} category={post.category} />
+            {related.length > 0 && (
+              <section className="mt-12">
+                <h2 className="mb-4 text-xl font-semibold">Artikel Terkait</h2>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {related.map((item) => (
+                    <a
+                      key={item.slug}
+                      href={`/blog/${item.slug}`}
+                      className="group border-border/60 hover:border-primary/40 overflow-hidden rounded-xl border transition-colors"
+                    >
+                      <div className="aspect-[16/10] overflow-hidden">
+                        <img
+                          src={item.cover}
+                          alt={item.title}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <p className="group-hover:text-primary line-clamp-2 font-medium transition-colors">
+                          {item.title}
+                        </p>
+                        <p className="text-muted-foreground mt-1 text-sm">
+                          {item.category}
+                        </p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
-
-          <ShareModal
-            open={shareOpen}
-            onClose={() => setShareOpen(false)}
-            url={typeof window !== "undefined" ? window.location.href : ""}
-            title={post.title}
-          />
         </div>
-      </article>
-    </div>
+      </section>
+    </main>
   );
 }

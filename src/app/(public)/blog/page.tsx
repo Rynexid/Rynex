@@ -1,18 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { BlogCard } from "@/components/blog/card";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@rynex/ui/breadcrumb";
+import { Breadcrumbs } from "@/components/editorial/breadcrumbs";
 import { posts } from "@/data/blog";
 
 export default function BlogPage() {
@@ -40,66 +32,40 @@ export default function BlogPage() {
   }, []);
 
   return (
-    <div className="pt-28">
-      <section className="pb-20">
+    <main className="bg-background min-h-screen">
+      <section className="pt-24 pb-16 md:pt-28">
         <div className="container mx-auto px-4">
-          <Breadcrumb className="mb-6">
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link href="/">Beranda</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Blog</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+          <div className="mx-auto max-w-6xl">
+            <Breadcrumbs
+              items={[{ label: "Beranda", href: "/" }, { label: "Blog" }]}
+            />
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mx-auto mb-16 max-w-3xl text-center"
-          >
-            <span className="text-primary font-mono text-xs font-semibold tracking-widest uppercase">
-              Blog
-            </span>
-            <h1 className="mt-4 mb-3 text-xl font-bold md:text-4xl">
-              Wawasan &
-              <br />
-              <span className="gradient-text">Artikel</span>
-            </h1>
-            <p className="text-muted-foreground mx-auto max-w-2xl text-xs md:text-base">
-              Artikel, panduan, dan wawasan seputar pengembangan web, desain
-              digital, dan strategi pertumbuhan.
-            </p>
-          </motion.div>
+            <header className="mb-10">
+              <p className="text-primary mb-2 font-mono text-xs tracking-widest uppercase">
+                Blog
+              </p>
+              <h1 className="text-3xl font-semibold tracking-tight md:text-5xl">
+                Artikel & Wawasan
+              </h1>
+              <p className="text-muted-foreground mt-3 max-w-2xl text-base">
+                Panduan praktis seputar pengembangan web, desain digital, dan
+                strategi bisnis.
+              </p>
+            </header>
 
-          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-3 md:grid-cols-2 md:gap-4 lg:grid-cols-3 lg:gap-6">
-            {posts.map((post, i) => (
-              <BlogCard
-                key={post.slug}
-                post={post}
-                index={i}
-                realtimeViews={liveViews[post.slug]}
-              />
-            ))}
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {posts.map((post) => (
+                <BlogCard
+                  key={post.slug}
+                  post={post}
+                  index={0}
+                  realtimeViews={liveViews[post.slug]}
+                />
+              ))}
+            </div>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="mt-16 text-center"
-          >
-            <p className="text-muted-foreground text-sm">
-              Artikel baru setiap minggu. Pantau terus untuk wawasan terbaru.
-            </p>
-          </motion.div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }

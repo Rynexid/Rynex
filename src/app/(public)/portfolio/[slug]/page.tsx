@@ -1,217 +1,287 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import {
-  ArrowLeft,
-  Check,
-  Code,
-  ExternalLink,
-  Layers,
-  Lightbulb,
-  Puzzle,
-  Sparkles,
-  TrendingUp,
-} from "lucide-react";
+import { ArrowRight, Code2 } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 
-import { Button } from "@rynex/ui/button";
+import { Breadcrumbs } from "@/components/editorial/breadcrumbs";
+import {
+  TableOfContents,
+  type TocItem,
+} from "@/components/editorial/table-of-contents";
+import { Button } from "@/components/ui/button";
 import { showcaseProjects } from "@/data/showcase";
-
-const sectionIcons = {
-  challenge: Lightbulb,
-  solution: Layers,
-  outcome: TrendingUp,
-} as const;
 
 export default function PortfolioDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const project = showcaseProjects.find((p) => p.slug === slug);
+  const [toc, setToc] = useState<TocItem[]>([]);
+
+  const related = useMemo(
+    () =>
+      project
+        ? showcaseProjects
+            .filter(
+              (p) => p.slug !== project.slug && p.category === project.category,
+            )
+            .slice(0, 3)
+        : [],
+    [project],
+  );
+
+  useEffect(() => {
+    if (!project) return;
+    const headings = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        ".editorial-content h2, .editorial-content h3",
+      ),
+    );
+    const items: TocItem[] = headings
+      .filter((el) => el.id)
+      .map((el) => ({
+        id: el.id,
+        text: el.textContent || "",
+        level: el.tagName === "H3" ? 3 : 2,
+      }));
+    setToc(items);
+  }, [project]);
 
   if (!project) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <span className="text-muted-foreground font-mono text-sm">
-          Project not found
-        </span>
-      </div>
+      <main className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <p className="text-muted-foreground text-sm">
+            Proyek tidak ditemukan
+          </p>
+          <Button asChild variant="link" className="mt-2">
+            <Link href="/portfolio">Kembali ke portofolio</Link>
+          </Button>
+        </div>
+      </main>
     );
   }
 
+  const slugify = (text: string) =>
+    text
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
   return (
-    <div className="min-h-screen">
-      {/* ── Hero ── */}
-      <div className="relative h-[50vh] min-h-[360px] overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={project.cover}
-            alt={project.name}
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/40 to-transparent" />
-        </div>
-
-        {/* Back */}
-        <div className="absolute top-6 left-4 z-10 md:left-8">
-          <Link
-            href="/portfolio"
-            className="text-muted-foreground hover:text-foreground inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-4 py-2 font-mono text-xs tracking-wider uppercase backdrop-blur-sm transition-colors"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            Portfolio
-          </Link>
-        </div>
-
-        {/* Hero content */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="absolute bottom-0 left-0 right-0 z-10 px-4 pb-10 md:px-8"
-        >
-          <div className="container mx-auto">
-            <span className="bg-primary/90 text-primary-foreground mb-4 inline-block rounded-full px-3 py-1 font-mono text-[10px] font-semibold tracking-wider uppercase">
-              {project.category} &middot; {project.subcategory}
-            </span>
-            <h1 className="mb-3 text-3xl font-bold md:text-5xl">
-              {project.name}
-            </h1>
-            <p className="text-muted-foreground font-mono text-sm">
-              {project.theme} &middot; {project.accent} &middot; {project.style}
-            </p>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* ── Content ── */}
-      <section className="pb-20 pt-12">
+    <main className="bg-background min-h-screen">
+      <section className="pt-24 pb-16 md:pt-28">
         <div className="container mx-auto px-4">
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-muted-foreground mx-auto mb-16 max-w-3xl text-base leading-relaxed md:text-lg"
-          >
-            {project.description}
-          </motion.p>
+          <div className="mx-auto max-w-6xl">
+            <Breadcrumbs
+              items={[
+                { label: "Beranda", href: "/" },
+                { label: "Portofolio", href: "/portfolio" },
+                { label: project.name },
+              ]}
+            />
 
-          {/* Meta badges */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mx-auto mb-16 flex max-w-3xl flex-wrap gap-2"
-          >
-            {project.highlights.map((h) => (
-              <span
-                key={h}
-                className="bg-primary/10 text-primary rounded-full px-3 py-1 font-mono text-xs"
-              >
-                {h}
-              </span>
-            ))}
-          </motion.div>
-
-          {/* Tech Stack + Components */}
-          <div className="mx-auto mb-16 grid max-w-3xl gap-6 md:grid-cols-2">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="rounded-2xl border border-white/5 bg-white/[0.02] p-6"
-            >
-              <div className="mb-4 flex items-center gap-3">
-                <div className="bg-primary/10 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl">
-                  <Code className="text-primary h-4 w-4" />
-                </div>
-                <h2 className="font-semibold">Tech Stack</h2>
-              </div>
-              <p className="text-muted-foreground text-sm">
-                {project.techStack}
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-2xl border border-white/5 bg-white/[0.02] p-6"
-            >
-              <div className="mb-4 flex items-center gap-3">
-                <div className="bg-primary/10 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl">
-                  <Puzzle className="text-primary h-4 w-4" />
-                </div>
-                <h2 className="font-semibold">Highlights</h2>
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {project.highlights.map((h) => (
-                  <span
-                    key={h}
-                    className="bg-primary/10 text-primary rounded-full px-2.5 py-0.5 font-mono text-[10px]"
-                  >
-                    {h}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Gallery */}
-          {project.images.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="mx-auto mb-16 max-w-4xl"
-            >
-              <div className="mb-4 flex items-center gap-2">
-                <Sparkles className="text-primary h-4 w-4" />
-                <span className="text-muted-foreground font-mono text-[10px] tracking-wider uppercase">
-                  Preview
+            <header className="mb-8">
+              <div className="mb-3 flex flex-wrap items-center gap-2">
+                <span className="bg-muted text-muted-foreground rounded-full px-2.5 py-0.5 text-xs">
+                  {project.subcategory}
+                </span>
+                <span className="bg-muted text-muted-foreground rounded-full px-2.5 py-0.5 text-xs">
+                  {project.category}
                 </span>
               </div>
-              <div className="grid grid-cols-1 gap-4">
-                {project.images.map((img, i) => (
-                  <div
-                    key={i}
-                    className="overflow-hidden rounded-xl border border-white/5"
-                  >
-                    <img
-                      src={img}
-                      alt={`${project.name} - ${i + 1}`}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
-                    />
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
+              <h1 className="text-3xl font-semibold tracking-tight md:text-5xl">
+                {project.name}
+              </h1>
+              <p className="text-muted-foreground mt-3 max-w-3xl text-base md:text-lg">
+                {project.description}
+              </p>
+            </header>
 
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mx-auto flex max-w-3xl flex-col gap-4 sm:flex-row"
-          >
-            <Link href="/contact">
-              <Button className="soft-shadow w-full font-mono text-xs tracking-wider uppercase sm:w-auto">
-                <ExternalLink className="mr-2 h-4 w-4" />
-                Mulai Proyek Serupa
-              </Button>
-            </Link>
-          </motion.div>
+            <div className="border-border/60 mb-10 overflow-hidden rounded-xl border">
+              <img
+                src={project.cover}
+                alt={project.name}
+                className="aspect-[16/9] h-full w-full object-cover"
+              />
+            </div>
+
+            <div className="grid gap-10 lg:grid-cols-[1fr_280px]">
+              <article className="editorial-content flex max-w-[760px] flex-col gap-10">
+                <section>
+                  <h2
+                    id={slugify("Ringkasan Proyek")}
+                    className="mb-3 scroll-mt-24 text-2xl font-semibold tracking-tight"
+                  >
+                    Ringkasan Proyek
+                  </h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {project.description}
+                  </p>
+                </section>
+
+                <section>
+                  <h2
+                    id={slugify("Teknologi")}
+                    className="mb-3 scroll-mt-24 text-2xl font-semibold tracking-tight"
+                  >
+                    Teknologi
+                  </h2>
+                  <div className="border-border/60 flex items-center gap-3 rounded-lg border p-4">
+                    <div className="bg-primary/10 flex h-9 w-9 items-center justify-center rounded-lg">
+                      <Code2 className="text-primary h-4 w-4" />
+                    </div>
+                    <p className="text-sm">{project.techStack}</p>
+                  </div>
+                </section>
+
+                <section>
+                  <h2
+                    id={slugify("Fitur Utama")}
+                    className="mb-3 scroll-mt-24 text-2xl font-semibold tracking-tight"
+                  >
+                    Fitur Utama
+                  </h2>
+                  <ul className="grid gap-2 sm:grid-cols-2">
+                    {project.highlights.map((h) => (
+                      <li
+                        key={h}
+                        className="border-border/60 rounded-lg border px-3 py-2 text-sm"
+                      >
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+
+                {project.images.length > 1 && (
+                  <section>
+                    <h2
+                      id={slugify("Tampilan Proyek")}
+                      className="mb-4 scroll-mt-24 text-2xl font-semibold tracking-tight"
+                    >
+                      Tampilan Proyek
+                    </h2>
+                    <div className="flex flex-col gap-4">
+                      {project.images.slice(1).map((img, i) => (
+                        <figure
+                          key={i}
+                          className="border-border/60 overflow-hidden rounded-xl border"
+                        >
+                          <img
+                            src={img}
+                            alt={`${project.name} - tampilan ${i + 2}`}
+                            loading="lazy"
+                            className="h-full w-full object-cover"
+                          />
+                        </figure>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                <section className="border-border/60 rounded-xl border p-6 text-center">
+                  <h2 className="text-xl font-semibold">
+                    Butuh solusi serupa?
+                  </h2>
+                  <p className="text-muted-foreground mt-2 text-sm">
+                    Diskusikan kebutuhan proyek Anda dengan tim Rynex.
+                  </p>
+                  <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                    <Button asChild>
+                      <Link href="/contact">
+                        Mulai proyek
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                    <Button asChild variant="outline">
+                      <Link href="/portfolio">Lihat portofolio lainnya</Link>
+                    </Button>
+                  </div>
+                </section>
+
+                {related.length > 0 && (
+                  <section>
+                    <h2
+                      id={slugify("Proyek Terkait")}
+                      className="mb-4 scroll-mt-24 text-2xl font-semibold tracking-tight"
+                    >
+                      Proyek Terkait
+                    </h2>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      {related.map((item) => (
+                        <Link
+                          key={item.slug}
+                          href={`/portfolio/${item.slug}`}
+                          className="group border-border/60 hover:border-primary/40 overflow-hidden rounded-xl border transition-colors"
+                        >
+                          <div className="aspect-[16/10] overflow-hidden">
+                            <img
+                              src={item.cover}
+                              alt={item.name}
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+                            />
+                          </div>
+                          <div className="p-4">
+                            <p className="group-hover:text-primary font-medium transition-colors">
+                              {item.name}
+                            </p>
+                            <p className="text-muted-foreground mt-1 text-sm">
+                              {item.subcategory}
+                            </p>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </section>
+                )}
+              </article>
+
+              <aside className="hidden lg:block">
+                <div className="sticky top-24 flex flex-col gap-6">
+                  <div className="border-border/60 rounded-xl border p-5">
+                    <p className="font-medium">Detail Proyek</p>
+                    <dl className="mt-4 flex flex-col gap-2 text-sm">
+                      <div className="flex items-center justify-between">
+                        <dt className="text-muted-foreground">Kategori</dt>
+                        <dd>{project.category}</dd>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <dt className="text-muted-foreground">Subkategori</dt>
+                        <dd>{project.subcategory}</dd>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <dt className="text-muted-foreground">Tema</dt>
+                        <dd>{project.theme}</dd>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <dt className="text-muted-foreground">Aksen</dt>
+                        <dd>{project.accent}</dd>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <dt className="text-muted-foreground">Gaya</dt>
+                        <dd className="text-right">{project.style}</dd>
+                      </div>
+                    </dl>
+                  </div>
+                  <div className="border-border/60 rounded-xl border p-5">
+                    <p className="font-medium">Mulai Proyek Serupa</p>
+                    <p className="text-muted-foreground mt-2 text-sm">
+                      Diskusikan kebutuhan Anda untuk solusi yang sesuai.
+                    </p>
+                    <Button asChild className="mt-4 w-full">
+                      <Link href="/contact">
+                        Hubungi Kami
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }

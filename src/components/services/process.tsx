@@ -2,98 +2,70 @@
 
 import { motion } from "framer-motion";
 
-const ease = [0.22, 1, 0.36, 1] as const;
-
 const steps = [
   {
-    title: "Discovery",
-    desc: "We learn your business, users, and the problem before touching a design tool.",
+    num: "01",
+    title: "Tell Us What You Need",
+    desc: "Share your goals, challenges, and what you want to achieve.",
   },
   {
-    title: "Business Analysis",
-    desc: "Requirements are mapped against real operational constraints, not assumptions.",
+    num: "02",
+    title: "Explore the Scope",
+    desc: "Discuss the requirements, constraints, and possible direction of the solution.",
   },
   {
-    title: "Architecture",
-    desc: "System boundaries, data flow, and technology choices are decided upfront.",
+    num: "03",
+    title: "Plan the Work",
+    desc: "Clarify the proposed scope, deliverables, and commercial terms before work begins.",
   },
   {
-    title: "Database Design",
-    desc: "Schemas built for the queries you'll actually run, not just the ones you have today.",
-  },
-  {
-    title: "Wireframe",
-    desc: "Low-fidelity structure to validate flow before visual design begins.",
-  },
-  {
-    title: "UI Design",
-    desc: "Interface design that matches your brand and reduces user friction.",
-  },
-  {
-    title: "Frontend",
-    desc: "Interfaces built with modern, maintainable component architecture.",
-  },
-  {
-    title: "Backend",
-    desc: "Business logic, APIs, and data layers built for correctness and scale.",
-  },
-  {
-    title: "Testing",
-    desc: "Automated and manual testing across critical paths before anything ships.",
-  },
-  {
-    title: "Deployment",
-    desc: "Staged rollout with monitoring in place from the first release.",
-  },
-  {
-    title: "Maintenance",
-    desc: "Ongoing support, patching, and improvements after launch.",
+    num: "04",
+    title: "Build and Improve",
+    desc: "Proceed with the agreed work and identify opportunities for improvement where appropriate.",
   },
 ];
 
 export function Process() {
   return (
-    <section className="relative overflow-hidden bg-[#080d16] py-24 md:py-32">
+    <section className="py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease }}
-          className="mb-16 text-center"
-        >
-          <p className="mb-4 font-mono text-xs font-semibold tracking-[0.14em] text-sky-300 uppercase">
-            ENGINEERING PROCESS
+        <div className="mx-auto mb-10 max-w-3xl">
+          <p className="text-primary mb-2 font-mono text-xs tracking-widest uppercase">
+            How a Project Moves Forward
           </p>
-          <h2 className="mx-auto max-w-[600px] text-3xl font-semibold tracking-tight text-white md:text-[2.4rem]">
-            Eleven steps. Zero guesswork.
+          <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
+            A simple path from need to solution
           </h2>
-        </motion.div>
+          <p className="text-muted-foreground mt-3 leading-relaxed">
+            A practical process to keep things clear from the start.
+          </p>
+        </div>
 
-        <ol className="mx-auto flex max-w-[760px] flex-col">
+        <div className="mx-auto grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
-            <motion.li
-              key={step.title}
-              initial={{ opacity: 0, y: 24 }}
+            <motion.article
+              key={step.num}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: i * 0.03, ease }}
-              className={`grid grid-cols-[64px_1fr] gap-5 py-5 ${
-                i < steps.length - 1 ? "border-b border-white/[0.06]" : ""
-              }`}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              className="border-border/60 relative rounded-xl border p-5"
             >
-              <span className="font-mono text-[13px] text-sky-300">
-                {String(i + 1).padStart(2, "0")}
+              <span className="text-primary/60 absolute top-4 right-4 font-mono text-sm">
+                {step.num}
               </span>
-              <div>
-                <h3 className="mb-1 text-[16px] font-semibold text-white">
-                  {step.title}
-                </h3>
-                <p className="text-[14px] text-white/55">{step.desc}</p>
+              <div className="bg-primary/10 mb-4 flex h-9 w-9 items-center justify-center rounded-lg">
+                <span className="text-primary font-mono text-xs">
+                  {step.num}
+                </span>
               </div>
-            </motion.li>
+              <h3 className="font-medium">{step.title}</h3>
+              <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
+                {step.desc}
+              </p>
+            </motion.article>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
   );

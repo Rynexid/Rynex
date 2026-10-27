@@ -19,8 +19,15 @@ const socialLinks = [
 ];
 
 const footerLinks = {
-  Layanan: ["Landing Page", "Website", "Dashboard", "Sistem Kustom"],
-  Perusahaan: ["Tentang", "Portofolio", "Blog", "Kontak"],
+  Layanan: [
+    { label: "Layanan", href: "/services" },
+    { label: "Portofolio", href: "/portfolio" },
+  ],
+  Perusahaan: [
+    { label: "Tentang", href: "/about" },
+    { label: "Kontak", href: "/contact" },
+    { label: "Blog", href: "/blog" },
+  ],
 };
 
 const contactInfo = [
@@ -78,12 +85,12 @@ export function Footer() {
             </h4>
             <ul className="space-y-1.5">
               {footerLinks.Layanan.map((link) => (
-                <li key={link}>
+                <li key={link.href}>
                   <Link
-                    href="#"
+                    href={link.href}
                     className="text-muted-foreground hover:text-primary text-xs transition-colors"
                   >
-                    {link}
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -97,12 +104,12 @@ export function Footer() {
             </h4>
             <ul className="space-y-1.5">
               {footerLinks.Perusahaan.map((link) => (
-                <li key={link}>
+                <li key={link.href}>
                   <Link
-                    href="#"
+                    href={link.href}
                     className="text-muted-foreground hover:text-primary text-xs transition-colors"
                   >
-                    {link}
+                    {link.label}
                   </Link>
                 </li>
               ))}

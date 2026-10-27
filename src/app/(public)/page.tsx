@@ -2,9 +2,15 @@ import dynamic from "next/dynamic";
 
 import { ResponsiveHero } from "@/components/layout/responsiveHero";
 
-const ServicesSection = dynamic(() =>
-  import("@/components/rynex/services").then((m) => ({
-    default: m.ServicesSection,
+const ServicesOverview = dynamic(() =>
+  import("@/components/rynex/home/services-overview").then((m) => ({
+    default: m.ServicesOverview,
+  })),
+);
+
+const ProductsPreview = dynamic(() =>
+  import("@/components/rynex/home/products-preview").then((m) => ({
+    default: m.ProductsPreview,
   })),
 );
 
@@ -14,45 +20,21 @@ const PortfolioSection = dynamic(() =>
   })),
 );
 
-const HowRynexBuilds = dynamic(() =>
-  import("@/components/rynex/howRynexBuildsV2").then((m) => ({
-    default: m.HowRynexBuildsV2,
+const ProcessOverview = dynamic(() =>
+  import("@/components/rynex/home/process-overview").then((m) => ({
+    default: m.ProcessOverview,
   })),
 );
 
-const WhySection = dynamic(() =>
-  import("@/components/rynex/why").then((m) => ({
-    default: m.WhySection,
+const PhilosophyPreview = dynamic(() =>
+  import("@/components/rynex/home/philosophy-preview").then((m) => ({
+    default: m.PhilosophyPreview,
   })),
 );
 
-const PremiumPricingCards = dynamic(() =>
-  import("@/components/rynex/premiumPricingCards").then((m) => ({
-    default: m.PremiumPricingCards,
-  })),
-);
-
-const TestimonialsSection = dynamic(() =>
-  import("@/components/rynex/testimonials").then((m) => ({
-    default: m.TestimonialsSection,
-  })),
-);
-
-const BlogHomeSection = dynamic(() =>
-  import("@/components/rynex/blogHome").then((m) => ({
-    default: m.BlogHomeSection,
-  })),
-);
-
-const FAQSection = dynamic(() =>
-  import("@/components/rynex/faq").then((m) => ({
-    default: m.FAQSection,
-  })),
-);
-
-const CTASection = dynamic(() =>
-  import("@/components/rynex/cta").then((m) => ({
-    default: m.CTASection,
+const HomeCta = dynamic(() =>
+  import("@/components/rynex/home/home-cta").then((m) => ({
+    default: m.HomeCta,
   })),
 );
 
@@ -60,15 +42,12 @@ export default function HomePage() {
   return (
     <>
       <ResponsiveHero />
-      <ServicesSection />
+      <ServicesOverview />
+      <ProductsPreview />
       <PortfolioSection />
-      <HowRynexBuilds />
-      <WhySection />
-      <PremiumPricingCards />
-      <TestimonialsSection />
-      <BlogHomeSection />
-      <FAQSection />
-      <CTASection />
+      <ProcessOverview />
+      <PhilosophyPreview />
+      <HomeCta />
     </>
   );
 }
