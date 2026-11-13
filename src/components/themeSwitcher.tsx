@@ -3,9 +3,9 @@
 import { useTheme } from "next-themes";
 import { ComponentProps } from "react";
 
-import { Icons } from "@/components/icons";
-import { Button } from "@rynex/ui/button";
-import { cn } from "@rynex/utils";
+import { Icons } from "@components/icons";
+import { Button } from "@components/ui/button";
+import { cn } from "@lib/utils";
 
 type ThemeSwitcherProps = {
   className?: ComponentProps<"button">["className"];

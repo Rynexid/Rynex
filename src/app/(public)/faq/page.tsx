@@ -10,14 +10,14 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 
-import { Button } from "@rynex/ui/button";
+import { Button } from "@components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@rynex/ui/card";
+} from "@components/ui/card";
 
 const faqItems = [
   {

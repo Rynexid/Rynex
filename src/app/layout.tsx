@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Toaster } from "sonner";
 
-import { ThemeProvider } from "@/components/shared/themeProvider";
-import { siteConfig } from "@/lib/siteConfig";
+import { ThemeProvider } from "@components/shared/themeProvider";
+import { siteConfig } from "@lib/siteConfig";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),

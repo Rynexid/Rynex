@@ -1,6 +1,6 @@
 import type { ConfirmedEvent, OptimisticEvent } from "@ably-labs/models";
 
-import type { CommentData } from "@/lib/comments";
+import type { CommentData } from "@lib/comments";
 
 export interface CommentState {
   comments: CommentData[];

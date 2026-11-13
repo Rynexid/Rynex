@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 
-import { getAllViews } from "@/lib/views";
+import { getAllViews } from "@lib/views";
 
 export const dynamic = "force-dynamic";
 

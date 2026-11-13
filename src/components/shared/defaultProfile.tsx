@@ -1,6 +1,6 @@
 import { User } from "lucide-react";
 
-import { cn } from "@rynex/utils";
+import { cn } from "@lib/utils";
 
 interface DefaultProfileProps {
   name: string;

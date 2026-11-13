@@ -1,28 +1,33 @@
 "use client";
 
 import {
-  IconCamera,
+  IconApps,
+  IconBriefcase,
+  IconCalendarEvent,
   IconChartBar,
   IconDashboard,
   IconDatabase,
-  IconFileAi,
   IconFileDescription,
   IconFileWord,
   IconFolder,
   IconHelp,
   IconInnerShadowTop,
+  IconKey,
   IconListDetails,
   IconReport,
   IconSearch,
   IconSettings,
+  IconShoppingCart,
+  IconTrendingUp,
+  IconUserCircle,
   IconUsers,
 } from "@tabler/icons-react";
 import * as React from "react";
 
-import { NavDocuments } from "@/components/nav-documents";
-import { NavMain } from "@/components/nav-main";
-import { NavSecondary } from "@/components/nav-secondary";
-import { NavUser } from "@/components/nav-user";
+import { NavDocuments } from "@components/nav-documents";
+import { NavMain } from "@components/nav-main";
+import { NavSecondary } from "@components/nav-secondary";
+import { NavUser } from "@components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -31,7 +36,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from "@components/ui/sidebar";
 
 const data = {
   user: {
@@ -46,105 +51,97 @@ const data = {
       icon: IconDashboard,
     },
     {
-      title: "Lifecycle",
-      url: "/dashboard",
-      icon: IconListDetails,
+      title: "Products",
+      url: "/dashboard/products",
+      icon: IconApps,
     },
     {
-      title: "Analytics",
-      url: "/dashboard",
-      icon: IconChartBar,
+      title: "Licenses",
+      url: "/dashboard/licenses",
+      icon: IconKey,
+    },
+    {
+      title: "Orders",
+      url: "/dashboard/orders",
+      icon: IconShoppingCart,
     },
     {
       title: "Projects",
-      url: "/dashboard",
+      url: "/dashboard/projects",
       icon: IconFolder,
     },
     {
       title: "Team",
-      url: "/dashboard",
+      url: "/dashboard/team",
       icon: IconUsers,
     },
-  ],
-  navClouds: [
     {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "/dashboard",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "/dashboard",
-        },
-        {
-          title: "Archived",
-          url: "/dashboard",
-        },
-      ],
+      title: "Analytics",
+      url: "/dashboard/analytics",
+      icon: IconChartBar,
     },
     {
-      title: "Proposal",
+      title: "Content",
+      url: "/dashboard/content",
       icon: IconFileDescription,
-      url: "/dashboard",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "/dashboard",
-        },
-        {
-          title: "Archived",
-          url: "/dashboard",
-        },
-      ],
     },
     {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "/dashboard",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "/dashboard",
-        },
-        {
-          title: "Archived",
-          url: "/dashboard",
-        },
-      ],
+      title: "Services",
+      url: "/dashboard/services",
+      icon: IconBriefcase,
+    },
+    {
+      title: "Portfolio",
+      url: "/dashboard/portfolio",
+      icon: IconCalendarEvent,
+    },
+    {
+      title: "Leads",
+      url: "/dashboard/leads",
+      icon: IconTrendingUp,
+    },
+    {
+      title: "Inquiries",
+      url: "/dashboard/inquiries",
+      icon: IconUserCircle,
+    },
+    {
+      title: "Lifecycle",
+      url: "/dashboard/lifecycle",
+      icon: IconListDetails,
     },
   ],
   navSecondary: [
     {
       title: "Settings",
-      url: "/dashboard",
+      url: "/dashboard/settings",
       icon: IconSettings,
     },
     {
       title: "Get Help",
-      url: "/dashboard",
+      url: "/dashboard/help",
       icon: IconHelp,
     },
     {
       title: "Search",
-      url: "/dashboard",
+      url: "/dashboard/search",
       icon: IconSearch,
     },
   ],
   documents: [
     {
       name: "Data Library",
-      url: "/dashboard",
+      url: "/dashboard/data-library",
       icon: IconDatabase,
     },
     {
       name: "Reports",
-      url: "/dashboard",
+      url: "/dashboard/reports",
       icon: IconReport,
     },
     {
       name: "Word Assistant",
-      url: "/dashboard",
+      url: "/dashboard/word-assistant",
       icon: IconFileWord,
     },
   ],

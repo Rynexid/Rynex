@@ -24,26 +24,11 @@
       "@/*": [
         "./src/*"
       ],
-      "@rynex/ui/*": [
-        "../../packages/ui/src/*"
+      "@lib/*": [
+        "./src/lib/*"
       ],
-      "@rynex/ui": [
-        "../../packages/ui/src"
-      ],
-      "@rynex/db": [
-        "../../packages/db/src"
-      ],
-      "@rynex/auth": [
-        "../../packages/auth/src"
-      ],
-      "@rynex/types": [
-        "../../packages/types/src"
-      ],
-      "@rynex/config": [
-        "../../packages/config/src"
-      ],
-      "@rynex/utils": [
-        "../../packages/utils/src"
+      "@components/*": [
+        "./src/components/*"
       ]
     }
   },

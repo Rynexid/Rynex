@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { deleteAdminSession } from "@/lib/admin-auth";
+import { deleteAdminSession } from "@lib/admin-auth";
 
 export async function POST(request: NextRequest) {
   try {

@@ -5,7 +5,7 @@ import { ArrowRight, Eye, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-import { Button } from "@rynex/ui/button";
+import { Button } from "@components/ui/button";
 
 const categories = ["All", "Landing Page", "Dashboard", "Portfolio", "SaaS"];
 

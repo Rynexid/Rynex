@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { Button } from "@rynex/ui/button";
+import { Button } from "@components/ui/button";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),

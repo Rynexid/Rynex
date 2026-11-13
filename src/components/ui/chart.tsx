@@ -363,6 +363,42 @@ function getPayloadConfigFromPayload(
   return configLabelKey in config ? config[configLabelKey] : config[key]
 }
 
+interface SimpleChartProps {
+  config?: Record<string, { label: string; color?: string }>;
+  data?: Record<string, number>[];
+  className?: string;
+}
+
+function ChartArea({ config, data, className }: SimpleChartProps) {
+  return (
+    <ChartContainer config={config || {}} className={className}>
+      <div className="h-full w-full flex items-center justify-center text-muted-foreground">
+        ChartArea - implement with Recharts AreaChart
+      </div>
+    </ChartContainer>
+  );
+}
+
+function ChartBar({ config, data, className }: SimpleChartProps) {
+  return (
+    <ChartContainer config={config || {}} className={className}>
+      <div className="h-full w-full flex items-center justify-center text-muted-foreground">
+        ChartBar - implement with Recharts BarChart
+      </div>
+    </ChartContainer>
+  );
+}
+
+function ChartPie({ config, data, className }: SimpleChartProps) {
+  return (
+    <ChartContainer config={config || {}} className={className}>
+      <div className="h-full w-full flex items-center justify-center text-muted-foreground">
+        ChartPie - implement with Recharts PieChart
+      </div>
+    </ChartContainer>
+  );
+}
+
 export {
   ChartContainer,
   ChartTooltip,
@@ -370,4 +406,7 @@ export {
   ChartLegend,
   ChartLegendContent,
   ChartStyle,
+  ChartArea,
+  ChartBar,
+  ChartPie,
 }

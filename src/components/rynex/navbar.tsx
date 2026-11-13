@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@rynex/ui/button";
-import { cn } from "@rynex/utils";
+import { Button } from "@components/ui/button";
+import { cn } from "@lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronDown, Moon, Sun } from "lucide-react";
 import Image from "next/image";

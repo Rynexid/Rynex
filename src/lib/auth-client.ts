@@ -1,1 +1,7 @@
-export { authClient } from "@rynex/auth/client";
+import { createAuthClient } from "better-auth/client";
+
+const authClient = createAuthClient({
+  baseURL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+});
+
+export { authClient };

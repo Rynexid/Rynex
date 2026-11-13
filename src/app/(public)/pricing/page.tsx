@@ -16,13 +16,13 @@ import {
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-import { ComparisonTable } from "@/components/shared/comparison";
-import { Button } from "@rynex/ui/button";
+import { ComparisonTable } from "@components/shared/comparison";
+import { Button } from "@components/ui/button";
 import { comparison } from "@/config";
 import pricingData from "@/config/pricing.json";
-import { PremiumPricingCards } from "@/components/rynex/premiumPricingCards";
-import { cn } from "@rynex/utils";
-import type { PricingPackage } from "@rynex/types/pricing";
+import { PremiumPricingCards } from "@components/rynex/premiumPricingCards";
+import { cn } from "@lib/utils";
+import type { PricingPackage } from "@lib/types/pricing";
 
 const packages = pricingData as PricingPackage[];
 

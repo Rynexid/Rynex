@@ -4,7 +4,7 @@ import { Calendar, Clock, Eye, User } from "lucide-react";
 import { notFound, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { Breadcrumbs } from "@/components/editorial/breadcrumbs";
+import { Breadcrumbs } from "@components/editorial/breadcrumbs";
 import { posts } from "@/data/blog";
 
 export default function BlogDetailPage() {

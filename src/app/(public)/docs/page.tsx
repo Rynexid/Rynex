@@ -3,8 +3,8 @@
 import { BookOpen, Terminal } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@rynex/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@rynex/ui/card";
+import { Button } from "@components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
 
 const docsSections = [
   {

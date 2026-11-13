@@ -1,7 +1,7 @@
 import ModelsClient from "@ably-labs/models";
 import { Rest } from "ably";
 
-import { env } from "@rynex/config";
+import { env } from "@lib/config";
 
 let tokenRest: Rest | null = null;
 

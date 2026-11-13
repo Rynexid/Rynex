@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { BlogCard } from "@/components/blog/card";
-import { Breadcrumbs } from "@/components/editorial/breadcrumbs";
+import { BlogCard } from "@components/blog/card";
+import { Breadcrumbs } from "@components/editorial/breadcrumbs";
 import { posts } from "@/data/blog";
 
 export default function BlogPage() {

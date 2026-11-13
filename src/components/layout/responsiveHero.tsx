@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-import { DesktopHero } from "@rynex/ui/desktop/desktopHero";
-import { MobileHero } from "@rynex/ui/mobile/mobileHero";
+import { DesktopHero } from "@components/ui/desktop/desktopHero";
+import { MobileHero } from "@components/ui/mobile/mobileHero";
 
 export function ResponsiveHero() {
   const [isMobile, setIsMobile] = useState<boolean | null>(null);

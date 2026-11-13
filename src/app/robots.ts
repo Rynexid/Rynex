@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-import { env } from "@rynex/config";
+import { env } from "@lib/config";
 
 export default function robots(): MetadataRoute.Robots {
   return {

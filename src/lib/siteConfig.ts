@@ -1,4 +1,4 @@
-import { env } from "@rynex/config";
+import { env } from "@lib/config";
 
 export const siteConfig = {
   title: "RYNEX | Premium Digital Engineering",

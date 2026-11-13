@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-import { BlogCard } from "@/components/blog/card";
+import { BlogCard } from "@components/blog/card";
 import { posts } from "@/data/blog";
 
 export function BlogHomeSection() {

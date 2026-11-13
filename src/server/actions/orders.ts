@@ -2,8 +2,8 @@
 
 import { eq } from "drizzle-orm";
 
-import { db } from "@rynex/db";
-import { schema } from "@rynex/db";
+import { db } from "@lib/db";
+import { schema } from "@lib/db";
 
 export interface OrderResult {
   success: boolean;

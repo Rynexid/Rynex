@@ -2,7 +2,7 @@
 
 import { eq } from "drizzle-orm";
 
-import { db, schema } from "@rynex/db";
+import { db, schema } from "@lib/db";
 
 export interface Review {
   id: number;

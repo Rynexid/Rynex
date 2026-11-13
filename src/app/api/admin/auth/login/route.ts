@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { db } from "@rynex/db";
-import { adminUsers } from "@rynex/db";
+import { db } from "@lib/db";
+import { adminUsers } from "@lib/db";
 import { eq } from "drizzle-orm";
-import { validateAdminCredentials, createAdminSession } from "@/lib/admin-auth";
+import { validateAdminCredentials, createAdminSession } from "@lib/admin-auth";
 
 export async function POST(request: NextRequest) {
   try {

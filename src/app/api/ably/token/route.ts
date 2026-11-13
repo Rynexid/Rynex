@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { createAblyTokenRequest } from "@/lib/ably/client";
+import { createAblyTokenRequest } from "@lib/ably/client";
 
 export const dynamic = "force-dynamic";
 

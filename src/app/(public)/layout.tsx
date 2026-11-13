@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic";
 
-import { Footer } from "@/components/rynex/footer";
-import { Navbar } from "@/components/rynex/navbar";
-import { SmoothScroll } from "@/components/rynex/scroll";
-import { MobileBottomNavbar } from "@rynex/ui/mobile/bottomNav";
+import { Footer } from "@components/rynex/footer";
+import { Navbar } from "@components/rynex/navbar";
+import { SmoothScroll } from "@components/rynex/scroll";
+import { MobileBottomNavbar } from "@components/ui/mobile/bottomNav";
 
 const BackgroundSystem = dynamic(() =>
   import("@/components/backgrounds/backgroundSystem").then((m) => ({

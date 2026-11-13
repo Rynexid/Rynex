@@ -4,8 +4,8 @@ import ModelsClient from "@ably-labs/models";
 import { Realtime } from "ably";
 import { useCallback, useEffect, useState } from "react";
 
-import { type CommentState, mergeComments } from "@/lib/ably/merge";
-import type { CommentData } from "@/lib/comments";
+import { type CommentState, mergeComments } from "@lib/ably/merge";
+import type { CommentData } from "@lib/comments";
 
 let ablyInstance: Realtime | null = null;
 let modelsClientInstance: ModelsClient | null = null;

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getView, incrementView } from "@/lib/views";
+import { getView, incrementView } from "@lib/views";
 
 export async function GET(
   _request: NextRequest,

@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
-import { db } from "@rynex/db";
-import { licenses } from "@rynex/db";
+import { db } from "@lib/db";
+import { licenses } from "@lib/db";
 import { eq, and, sql } from "drizzle-orm";
 
 export async function validateLicense(key: string) {

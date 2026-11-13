@@ -1,7 +1,7 @@
-import { BusinessPartnersSection } from "@/components/partners/business";
-import { CollaborationSection } from "@/components/partners/collaboration";
-import { EcosystemSection } from "@/components/partners/ecosystem";
-import { TechnologyPartnersSection } from "@/components/partners/techPartners";
+import { BusinessPartnersSection } from "@components/partners/business";
+import { CollaborationSection } from "@components/partners/collaboration";
+import { EcosystemSection } from "@components/partners/ecosystem";
+import { TechnologyPartnersSection } from "@components/partners/techPartners";
 
 export const metadata = {
   title: "Partners & Ecosystem",

@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import { cookies } from "next/headers";
-import { db } from "@rynex/db";
-import { adminSessions, adminUsers } from "@rynex/db";
+import { db } from "@lib/db";
+import { adminSessions, adminUsers } from "@lib/db";
 import { eq, and, gt } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 

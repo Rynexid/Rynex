@@ -2,8 +2,8 @@
 
 import { eq } from "drizzle-orm";
 
-import { db } from "@rynex/db";
-import { products } from "@rynex/db";
+import { db } from "@lib/db";
+import { products } from "@lib/db";
 
 export interface ProductResult {
   success: boolean;

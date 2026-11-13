@@ -1,16 +1,16 @@
 "use client";
-import { cn } from "@rynex/utils"
+import { cn } from "@lib/utils"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@components/ui/button"
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { authClient } from "@rynex/auth/client"
+} from "@components/ui/field"
+import { Input } from "@components/ui/input"
+import { authClient } from "@lib/auth/client"
 import { useRouter } from "next/navigation"
 
 export function LoginForm({

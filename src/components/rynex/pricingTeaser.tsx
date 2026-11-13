@@ -5,8 +5,8 @@ import { ArrowRight, Check, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-import { Button } from "@rynex/ui/button";
-import { cn } from "@rynex/utils";
+import { Button } from "@components/ui/button";
+import { cn } from "@lib/utils";
 
 const plans = [
   {

@@ -1,11 +1,11 @@
-import type { ComparisonData } from "@rynex/types/comparison";
+import type { ComparisonData } from "@lib/types/comparison";
 import type {
   CollaborationItem,
   EcosystemItem,
   PartnerItem,
   TechItem,
-} from "@rynex/types/config";
-import type { PricingPackage } from "@rynex/types/pricing";
+} from "@lib/types/config";
+import type { PricingPackage } from "@lib/types/pricing";
 
 import collaborationsData from "./collaborations.json";
 import comparisonData from "./comparison.json";

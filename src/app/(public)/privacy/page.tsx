@@ -1,8 +1,8 @@
 import { Mail, MapPin, Phone, Shield } from "lucide-react";
 import Link from "next/link";
 
-import { Button } from "@rynex/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@rynex/ui/card";
+import { Button } from "@components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
 
 export default function PrivacyPage() {
   return (

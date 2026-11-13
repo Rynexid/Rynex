@@ -7,7 +7,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@rynex/ui/sidebar";
+} from "@components/ui/sidebar";
 import { Star, User, Package, Settings, MessageSquare } from "lucide-react";
 import Link from "next/link";
 

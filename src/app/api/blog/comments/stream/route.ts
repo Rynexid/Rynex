@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 
-import { getComments } from "@/lib/comments";
+import { getComments } from "@lib/comments";
 
 export const dynamic = "force-dynamic";
 

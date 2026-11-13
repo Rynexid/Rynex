@@ -1,14 +1,14 @@
 import { ArrowRight, Download, Star } from "lucide-react";
 import Link from "next/link";
 
-import { Badge } from "@rynex/ui/badge";
+import { Badge } from "@components/ui/badge";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@rynex/ui/card";
+} from "@components/ui/card";
 
 export default function ProductCard({ product }: { product: any }) {
   return (

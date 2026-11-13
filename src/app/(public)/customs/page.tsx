@@ -4,17 +4,17 @@ import { CheckCircle, Code, Palette } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-import { Button } from "@rynex/ui/button";
+import { Button } from "@components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@rynex/ui/card";
-import { Input } from "@rynex/ui/input";
-import { Label } from "@rynex/ui/label";
-import { Textarea } from "@rynex/ui/textarea";
+} from "@components/ui/card";
+import { Input } from "@components/ui/input";
+import { Label } from "@components/ui/label";
+import { Textarea } from "@components/ui/textarea";
 
 export default function CustomProjectPage() {
   const [submitted, setSubmitted] = useState(false);

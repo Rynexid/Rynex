@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { db } from "@rynex/db";
-import { adminUsers, adminSessions } from "@rynex/db";
+import { db } from "@lib/db";
+import { adminUsers, adminSessions } from "@lib/db";
 import { eq, and, sql } from "drizzle-orm";
-import { validateLicense } from "@/lib/license";
+import { validateLicense } from "@lib/license";
 
 const MAX_ATTEMPTS = 3;
 const WHATSAPP_NUMBER = "628950888317";

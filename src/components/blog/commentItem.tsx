@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Check, Edit3, Loader2, Trash2, X } from "lucide-react";
 import { useState } from "react";
 
-import type { CommentData } from "@/lib/comments";
+import type { CommentData } from "@lib/comments";
 
 interface CommentItemProps {
   comment: CommentData & { _pending?: boolean; _error?: boolean };

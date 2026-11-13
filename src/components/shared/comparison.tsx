@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Check, ChevronDown, Minus, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import type { ComparisonData } from "@rynex/types/comparison";
+import type { ComparisonData } from "@lib/types/comparison";
 
 interface ComparisonTableProps {
   data: ComparisonData;

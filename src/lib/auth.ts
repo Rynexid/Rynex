@@ -1,1 +1,1 @@
-export { auth } from "@rynex/auth";
+export { auth } from "./auth/index";

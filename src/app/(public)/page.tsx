@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-import { ResponsiveHero } from "@/components/layout/responsiveHero";
+import { ResponsiveHero } from "@components/layout/responsiveHero";
 
 const ServicesOverview = dynamic(() =>
   import("@/components/rynex/home/services-overview").then((m) => ({

@@ -5,12 +5,12 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-import { Breadcrumbs } from "@/components/editorial/breadcrumbs";
+import { Breadcrumbs } from "@components/editorial/breadcrumbs";
 import {
   TableOfContents,
   type TocItem,
-} from "@/components/editorial/table-of-contents";
-import { Button } from "@/components/ui/button";
+} from "@components/editorial/table-of-contents";
+import { Button } from "@components/ui/button";
 import { showcaseProjects } from "@/data/showcase";
 
 export default function PortfolioDetailPage() {

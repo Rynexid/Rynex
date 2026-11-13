@@ -3,7 +3,7 @@
 import { Check, MessageSquare, Send, Star, User } from "lucide-react";
 import { useState } from "react";
 
-import { DefaultProfileAvatar } from "@/components/shared/defaultProfile";
+import { DefaultProfileAvatar } from "@components/shared/defaultProfile";
 import { submitReview } from "@/server/actions/reviews";
 
 const services = [

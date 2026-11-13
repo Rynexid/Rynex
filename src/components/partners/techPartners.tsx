@@ -5,16 +5,16 @@ import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Badge } from "@rynex/ui/badge";
+import { Badge } from "@components/ui/badge";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@rynex/ui/card";
+} from "@components/ui/card";
 import { techPartners } from "@/config";
-import { cn } from "@rynex/utils";
+import { cn } from "@lib/utils";
 
 const categoryLabels: Record<string, string> = {
   framework: "Framework",

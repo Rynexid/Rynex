@@ -3,7 +3,7 @@
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 
-import { authClient } from "@rynex/auth/client";
+import { authClient } from "@lib/auth/client";
 
 const STAFF_ROLES = ["staff", "admin", "superAdmin"];
 

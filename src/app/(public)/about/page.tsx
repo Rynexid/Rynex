@@ -5,7 +5,7 @@ import { ArrowRight, Code2, Package, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useRef } from "react";
 
-import { Breadcrumbs } from "@/components/editorial/breadcrumbs";
+import { Breadcrumbs } from "@components/editorial/breadcrumbs";
 
 const missions = [
   {

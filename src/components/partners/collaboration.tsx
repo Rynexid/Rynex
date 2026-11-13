@@ -10,14 +10,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-import { Badge } from "@rynex/ui/badge";
+import { Badge } from "@components/ui/badge";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@rynex/ui/card";
+} from "@components/ui/card";
 import { getActiveCollaborations } from "@/config";
 
 const typeIcons: Record<string, React.ElementType> = {

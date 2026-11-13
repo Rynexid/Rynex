@@ -7,10 +7,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { Button } from "@rynex/ui/button";
-import { Input } from "@rynex/ui/input";
-import { Label } from "@rynex/ui/label";
-import { authClient } from "@rynex/auth/client";
+import { Button } from "@components/ui/button";
+import { Input } from "@components/ui/input";
+import { Label } from "@components/ui/label";
+import { authClient } from "@lib/auth/client";
 
 export default function RegisterPage() {
   const router = useRouter();

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import type { CommentData } from "@/lib/comments";
+import type { CommentData } from "@lib/comments";
 
 const MUTATION_TIMEOUT = 10000;
 

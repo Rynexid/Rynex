@@ -1,8 +1,8 @@
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
-import { db } from "@rynex/db";
-import { licenses } from "@rynex/db";
+import { db } from "@lib/db";
+import { licenses } from "@lib/db";
 
 export async function GET(request: NextRequest) {
   try {

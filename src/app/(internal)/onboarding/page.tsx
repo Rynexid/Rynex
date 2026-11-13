@@ -4,16 +4,16 @@ import { Key, Loader2, MessageCircle, Send, ShieldAlert, ShieldCheck } from "luc
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { Button } from "@rynex/ui/button";
+import { Button } from "@components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@rynex/ui/card";
-import { Input } from "@rynex/ui/input";
-import { Label } from "@rynex/ui/label";
+} from "@components/ui/card";
+import { Input } from "@components/ui/input";
+import { Label } from "@components/ui/label";
 
 type VerifyState = "idle" | "loading" | "success" | "error" | "locked";
 

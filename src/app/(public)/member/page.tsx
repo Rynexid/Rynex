@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 
-import { ReviewSidebar } from "@/components/review-sidebar";
-import { DefaultProfile } from "@/components/shared/defaultProfile";
+import { ReviewSidebar } from "@components/review-sidebar";
+import { DefaultProfile } from "@components/shared/defaultProfile";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,13 +11,13 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@rynex/ui/breadcrumb";
-import { Separator } from "@rynex/ui/separator";
+} from "@components/ui/breadcrumb";
+import { Separator } from "@components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@rynex/ui/sidebar";
+} from "@components/ui/sidebar";
 
 const userReviews = [
   {
