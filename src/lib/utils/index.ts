@@ -1,1 +1,1 @@
-export { cn } from "./utils";
+export { cn, formatCurrency } from "./utils";

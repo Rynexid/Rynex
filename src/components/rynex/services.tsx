@@ -1,7 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Cloud, Code2, Palette, Plug, Smartphone } from "lucide-react";
+import {
+  ArrowRight,
+  Cloud,
+  Code2,
+  Palette,
+  Plug,
+  Smartphone,
+} from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { FC } from "react";
@@ -181,7 +188,7 @@ export function ServicesSection() {
                   <div className="group border-border bg-card flex flex-col rounded-xl border p-4 transition-[background-color,border-color] duration-300">
                     <div className="mb-3 flex items-start justify-between">
                       <div className="bg-primary/5 flex h-10 w-10 items-center justify-center rounded-lg">
-                        <service.icon className="h-6 w-6 text-primary" />
+                        <service.icon className="text-primary h-6 w-6" />
                       </div>
                       <span className="text-border/70 font-mono text-base leading-none font-bold">
                         {String(i + 1).padStart(2, "0")}

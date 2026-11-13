@@ -79,8 +79,15 @@ export async function deleteProduct(id: number): Promise<ProductResult> {
 }
 
 export async function createProductForm(formData: FormData) {
-  const name = String(formData.get("name") || "")
-  const slug = String(formData.get("slug") || "")
-  const description = String(formData.get("description") || "")
-  await createProduct({ name, slug, description, type: "template", version: "1.0.0", price: 0 })
+  const name = String(formData.get("name") || "");
+  const slug = String(formData.get("slug") || "");
+  const description = String(formData.get("description") || "");
+  await createProduct({
+    name,
+    slug,
+    description,
+    type: "template",
+    version: "1.0.0",
+    price: 0,
+  });
 }

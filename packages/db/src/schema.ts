@@ -128,7 +128,35 @@ export const products = coresSchema.table("products", {
   price: integer("price").notNull().default(0),
   status: varchar("status", { length: 50 }).notNull().default("draft"),
   createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 });
+
+export const lifecycleStages = coresSchema.table(
+  "lifecycle_stages",
+  {
+    id: serial("id").primaryKey(),
+    name: varchar("name", { length: 255 }).notNull(),
+    description: text("description"),
+    stage: varchar("stage", { length: 50 }).notNull(),
+    progress: integer("progress").notNull().default(0),
+    product: varchar("product", { length: 255 }).notNull(),
+    status: varchar("status", { length: 50 }).notNull().default("planning"),
+    productId: integer("product_id").references(() => products.id, {
+      onDelete: "set null",
+    }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    index("lifecycle_stages_product_id_idx").on(table.productId),
+    index("lifecycle_stages_stage_idx").on(table.stage),
+    index("lifecycle_stages_status_idx").on(table.status),
+  ],
+);
 
 export const licenses = coresSchema.table("licenses", {
   id: serial("id").primaryKey(),
@@ -191,6 +219,110 @@ export const nodes = coresSchema.table("nodes", {
   expiry: timestamp("expiry").notNull(),
 });
 
+export const leads = coresSchema.table(
+  "leads",
+  {
+    id: serial("id").primaryKey(),
+    name: varchar("name", { length: 255 }).notNull(),
+    email: varchar("email", { length: 255 }).notNull(),
+    phone: varchar("phone", { length: 50 }),
+    company: varchar("company", { length: 255 }),
+    source: varchar("source", { length: 50 }).notNull().default("website"),
+    status: varchar("status", { length: 50 }).notNull().default("new"),
+    value: integer("value").notNull().default(0),
+    assignedTo: varchar("assigned_to", { length: 255 }),
+    notes: text("notes"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    index("leads_email_idx").on(table.email),
+    index("leads_status_idx").on(table.status),
+    index("leads_source_idx").on(table.source),
+  ],
+);
+
+export const inquiries = coresSchema.table(
+  "inquiries",
+  {
+    id: serial("id").primaryKey(),
+    name: varchar("name", { length: 255 }).notNull(),
+    email: varchar("email", { length: 255 }).notNull(),
+    phone: varchar("phone", { length: 50 }),
+    subject: varchar("subject", { length: 255 }).notNull(),
+    message: text("message").notNull(),
+    service: varchar("service", { length: 100 }),
+    status: varchar("status", { length: 50 }).notNull().default("open"),
+    priority: varchar("priority", { length: 20 }).notNull().default("medium"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+    resolvedAt: timestamp("resolved_at"),
+  },
+  (table) => [
+    index("inquiries_email_idx").on(table.email),
+    index("inquiries_status_idx").on(table.status),
+    index("inquiries_service_idx").on(table.service),
+  ],
+);
+
+export const services = coresSchema.table(
+  "services",
+  {
+    id: serial("id").primaryKey(),
+    name: varchar("name", { length: 255 }).notNull(),
+    slug: varchar("slug", { length: 255 }).notNull().unique(),
+    description: text("description"),
+    shortDescription: varchar("short_description", { length: 500 }),
+    icon: varchar("icon", { length: 100 }),
+    category: varchar("category", { length: 100 }),
+    price: integer("price").notNull().default(0),
+    featured: boolean("featured").default(false).notNull(),
+    order: integer("order").default(0).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    index("services_category_idx").on(table.category),
+    index("services_featured_idx").on(table.featured),
+  ],
+);
+
+export const content = coresSchema.table(
+  "content",
+  {
+    id: serial("id").primaryKey(),
+    title: varchar("title", { length: 255 }).notNull(),
+    slug: varchar("slug", { length: 255 }).notNull().unique(),
+    description: text("description"),
+    body: text("body"),
+    type: varchar("type", { length: 50 }).notNull().default("page"),
+    category: varchar("category", { length: 100 }),
+    tags: jsonb("tags").$type<string[]>().default([]).notNull(),
+    cover: varchar("cover", { length: 500 }),
+    status: varchar("status", { length: 50 }).notNull().default("draft"),
+    authorId: text("author_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    publishedAt: timestamp("published_at"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    index("content_author_id_idx").on(table.authorId),
+    index("content_status_idx").on(table.status),
+    index("content_type_idx").on(table.type),
+    index("content_category_idx").on(table.category),
+  ],
+);
+
 export const outbox = coresSchema.table("outbox", {
   sequenceId: serial("sequence_id").primaryKey(),
   mutationId: text("mutation_id").notNull(),
@@ -203,6 +335,41 @@ export const outbox = coresSchema.table("outbox", {
   lockExpiry: timestamp("lock_expiry"),
   processed: boolean("processed").notNull().default(false),
 });
+
+// ── Cores Schema Relations ──
+
+export const productsRelations = relations(products, ({ many }) => ({
+  lifecycleStages: many(lifecycleStages),
+}));
+
+export const lifecycleStagesRelations = relations(
+  lifecycleStages,
+  ({ one }) => ({
+    product: one(products, {
+      fields: [lifecycleStages.productId],
+      references: [products.id],
+    }),
+  }),
+);
+
+export const leadsRelations = relations(leads, ({ one }) => ({
+  // No direct relation to users table - leads are standalone
+}));
+
+export const inquiriesRelations = relations(inquiries, ({ one }) => ({
+  // No direct relation to users table - inquiries are standalone
+}));
+
+export const servicesRelations = relations(services, ({ one }) => ({
+  // No direct relation to users table - services are standalone
+}));
+
+export const contentRelations = relations(content, ({ one }) => ({
+  author: one(users, {
+    fields: [content.authorId],
+    references: [users.id],
+  }),
+}));
 
 // ── Customer Schema (console portal tables) ──
 
@@ -276,6 +443,126 @@ export const workspaces = customerSchema.table(
   (table) => [index("workspaces_userId_idx").on(table.userId)],
 );
 
+export const documents = customerSchema.table(
+  "documents",
+  {
+    id: serial("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    title: varchar("title", { length: 255 }).notNull(),
+    description: text("description"),
+    fileName: varchar("file_name", { length: 500 }).notNull(),
+    fileSize: integer("file_size").notNull(),
+    mimeType: varchar("mime_type", { length: 100 }).notNull(),
+    storagePath: varchar("storage_path", { length: 500 }).notNull(),
+    category: varchar("category", { length: 100 }),
+    tags: jsonb("tags").$type<string[]>().default([]).notNull(),
+    status: varchar("status", { length: 50 }).notNull().default("active"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    index("documents_userId_idx").on(table.userId),
+    index("documents_category_idx").on(table.category),
+    index("documents_status_idx").on(table.status),
+  ],
+);
+
+export const datasets = customerSchema.table(
+  "datasets",
+  {
+    id: serial("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    name: varchar("name", { length: 255 }).notNull(),
+    slug: varchar("slug", { length: 255 }).notNull().unique(),
+    description: text("description"),
+    source: varchar("source", { length: 100 }),
+    rowCount: integer("row_count").notNull().default(0),
+    columnCount: integer("column_count").notNull().default(0),
+    fileSize: integer("file_size").notNull(),
+    mimeType: varchar("mime_type", { length: 100 }).notNull(),
+    storagePath: varchar("storage_path", { length: 500 }).notNull(),
+    schema: jsonb("schema")
+      .$type<Record<string, string>>()
+      .default({})
+      .notNull(),
+    previewData: jsonb("preview_data").$type<any[][]>().default([]).notNull(),
+    status: varchar("status", { length: 50 }).notNull().default("active"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    index("datasets_userId_idx").on(table.userId),
+    index("datasets_status_idx").on(table.status),
+    index("datasets_slug_idx").on(table.slug),
+  ],
+);
+
+export const reports = customerSchema.table(
+  "reports",
+  {
+    id: serial("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    title: varchar("title", { length: 255 }).notNull(),
+    description: text("description"),
+    type: varchar("type", { length: 50 }).notNull(),
+    config: jsonb("config").$type<Record<string, any>>().default({}).notNull(),
+    filters: jsonb("filters")
+      .$type<Record<string, any>>()
+      .default({})
+      .notNull(),
+    dateFrom: timestamp("date_from"),
+    dateTo: timestamp("date_to"),
+    format: varchar("format", { length: 20 }).notNull().default("json"),
+    status: varchar("status", { length: 50 }).notNull().default("draft"),
+    resultPath: varchar("result_path", { length: 500 }),
+    generatedAt: timestamp("generated_at"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    index("reports_userId_idx").on(table.userId),
+    index("reports_status_idx").on(table.status),
+    index("reports_type_idx").on(table.type),
+  ],
+);
+
+export const wordAssistantDocs = customerSchema.table(
+  "word_assistant_docs",
+  {
+    id: serial("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    title: varchar("title", { length: 255 }).notNull(),
+    content: text("content").notNull(),
+    type: varchar("type", { length: 50 }).notNull().default("document"),
+    template: varchar("template", { length: 100 }),
+    meta: jsonb("meta").$type<Record<string, any>>().default({}).notNull(),
+    status: varchar("status", { length: 50 }).notNull().default("draft"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    index("word_assistant_docs_userId_idx").on(table.userId),
+    index("word_assistant_docs_status_idx").on(table.status),
+    index("word_assistant_docs_type_idx").on(table.type),
+  ],
+);
+
 // ── Customer Relations ──
 
 export const customerProfilesRelations = relations(
@@ -308,6 +595,37 @@ export const workspacesRelations = relations(workspaces, ({ one }) => ({
     references: [users.id],
   }),
 }));
+
+export const documentsRelations = relations(documents, ({ one }) => ({
+  user: one(users, {
+    fields: [documents.userId],
+    references: [users.id],
+  }),
+}));
+
+export const datasetsRelations = relations(datasets, ({ one }) => ({
+  user: one(users, {
+    fields: [datasets.userId],
+    references: [users.id],
+  }),
+}));
+
+export const reportsRelations = relations(reports, ({ one }) => ({
+  user: one(users, {
+    fields: [reports.userId],
+    references: [users.id],
+  }),
+}));
+
+export const wordAssistantDocsRelations = relations(
+  wordAssistantDocs,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [wordAssistantDocs.userId],
+      references: [users.id],
+    }),
+  }),
+);
 
 // ── Admin Auth Schema (separate from better-auth) ──
 

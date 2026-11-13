@@ -46,7 +46,7 @@ const data = {
   },
   navMain: [
     {
-      title: "Dashboard",
+      title: "Overview",
       url: "/dashboard",
       icon: IconDashboard,
     },
@@ -56,14 +56,14 @@ const data = {
       icon: IconApps,
     },
     {
-      title: "Licenses",
-      url: "/dashboard/licenses",
-      icon: IconKey,
+      title: "Lifecycle",
+      url: "/dashboard/lifecycle",
+      icon: IconListDetails,
     },
     {
-      title: "Orders",
-      url: "/dashboard/orders",
-      icon: IconShoppingCart,
+      title: "Analytics",
+      url: "/dashboard/analytics",
+      icon: IconChartBar,
     },
     {
       title: "Projects",
@@ -76,58 +76,27 @@ const data = {
       icon: IconUsers,
     },
     {
-      title: "Analytics",
-      url: "/dashboard/analytics",
-      icon: IconChartBar,
-    },
-    {
-      title: "Content",
-      url: "/dashboard/content",
+      title: "Documents",
+      url: "/dashboard/documents",
       icon: IconFileDescription,
     },
-    {
-      title: "Services",
-      url: "/dashboard/services",
-      icon: IconBriefcase,
-    },
-    {
-      title: "Portfolio",
-      url: "/dashboard/portfolio",
-      icon: IconCalendarEvent,
-    },
-    {
-      title: "Leads",
-      url: "/dashboard/leads",
-      icon: IconTrendingUp,
-    },
-    {
-      title: "Inquiries",
-      url: "/dashboard/inquiries",
-      icon: IconUserCircle,
-    },
-    {
-      title: "Lifecycle",
-      url: "/dashboard/lifecycle",
-      icon: IconListDetails,
-    },
-  ],
-  navSecondary: [
     {
       title: "Settings",
       url: "/dashboard/settings",
       icon: IconSettings,
     },
     {
-      title: "Get Help",
-      url: "/dashboard/help",
-      icon: IconHelp,
-    },
-    {
       title: "Search",
       url: "/dashboard/search",
       icon: IconSearch,
     },
+    {
+      title: "Get Help",
+      url: "/dashboard/get-help",
+      icon: IconHelp,
+    },
   ],
+  navSecondary: [],
   documents: [
     {
       name: "Data Library",
@@ -168,7 +137,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
         <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        {data.navSecondary.length > 0 && (
+          <NavSecondary items={data.navSecondary} className="mt-auto" />
+        )}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

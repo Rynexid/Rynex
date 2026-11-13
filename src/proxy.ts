@@ -1,7 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 const WEB_HOSTNAMES = ["rynexdev.vercel.app", "localhost:3000"];
-const CORE_HOSTNAMES = ["rynexdev-core.vercel.app", "rd-cores.vercel.app", "localhost:3001"];
+const CORE_HOSTNAMES = [
+  "rynexdev-core.vercel.app",
+  "rd-cores.vercel.app",
+  "localhost:3001",
+];
 
 const STAFF_ROLES = ["staff", "admin", "superAdmin"];
 

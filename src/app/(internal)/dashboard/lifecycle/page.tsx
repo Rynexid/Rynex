@@ -1,10 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import { Search, Plus, Edit, Trash2, ChevronLeft, ChevronRight, Filter } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import {
+  Search,
+  Plus,
+  Edit,
+  Trash2,
+  ChevronLeft,
+  ChevronRight,
+  Filter,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -14,81 +28,154 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import {
+  getLifecycleStages,
+  createLifecycleStage,
+  updateLifecycleStage,
+  deleteLifecycleStage,
+  getProductsForLifecycle,
+} from "@/server/actions/lifecycle";
 
 interface LifecycleStage {
   id: number;
   name: string;
-  description: string;
+  description: string | null;
   stage: string;
   progress: number;
   product: string;
   status: string;
+  productId: number | null;
   createdAt: string;
 }
 
 export default function LifecycleClientPage() {
-  const [items, setItems] = useState<any[]>([
-    { id: 1, name: "Discovery Phase", description: "Initial research and requirements gathering", stage: "discovery", progress: 100, product: "Portfolio Anime", status: "completed", createdAt: "2024-01-15" },
-    { id: 2, name: "Design Phase", description: "UI/UX design and prototyping", stage: "design", progress: 80, product: "Portfolio Anime", status: "in-progress", createdAt: "2024-02-01" },
-    { id: 3, name: "Development Sprint 1", description: "Core features implementation", stage: "development", progress: 40, product: "Dashboard SaaS", status: "in-progress", createdAt: "2024-03-01" },
-    { id: 4, name: "Testing & QA", description: "Quality assurance and bug fixes", stage: "testing", progress: 0, product: "Dashboard SaaS", status: "pending", createdAt: "2024-03-15" },
-    { id: 5, name: "Deployment Prep", description: "Production deployment preparation", stage: "deployment", progress: 0, product: "Portfolio Anime", status: "pending", createdAt: "2024-04-01" },
-    { id: 6, name: "Launch", description: "Public launch and monitoring", stage: "launch", progress: 0, product: "Portfolio Anime", status: "pending", createdAt: "2024-04-15" },
-    { id: 7, name: "Design Phase", description: "UI/UX design and prototyping", stage: "design", progress: 60, product: "Landing Page Modern", status: "in-progress", createdAt: "2024-03-10" },
-    { id: 8, name: "Development Sprint 1", description: "Core features implementation", stage: "development", progress: 20, product: "E-commerce Starter", status: "in-progress", createdAt: "2024-04-01" },
-  ]);
-
+  const [items, setItems] = useState<LifecycleStage[]>([]);
+  const [products, setProducts] = useState<Array<{ id: number; name: string }>>(
+    [],
+  );
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [page, setPage] = useState(1);
   const pageSize = 10;
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [editData, setEditData] = useState({ name: "", description: "", stage: "planning", progress: 0, product: "", status: "active" });
+  const [editData, setEditData] = useState({
+    name: "",
+    description: "",
+    stage: "planning",
+    progress: 0,
+    product: "",
+    status: "active",
+    productId: undefined as number | undefined,
+  });
   const [showCreate, setShowCreate] = useState(false);
+  const [createData, setCreateData] = useState({
+    name: "",
+    description: "",
+    stage: "planning",
+    progress: 0,
+    product: "",
+    status: "planning",
+    productId: undefined as number | undefined,
+  });
+  const [pagination, setPagination] = useState({
+    page: 1,
+    pageSize: 10,
+    total: 0,
+    totalPages: 0,
+  });
 
-  const stages = ["planning", "discovery", "design", "development", "testing", "deployment", "launch"];
-  const statuses = ["planning", "in-progress", "completed", "on-hold", "cancelled"];
+  const stages = [
+    "planning",
+    "discovery",
+    "design",
+    "development",
+    "testing",
+    "deployment",
+    "launch",
+  ];
+  const statuses = [
+    "planning",
+    "in-progress",
+    "completed",
+    "on-hold",
+    "cancelled",
+  ];
 
-  const filteredItems = items
-    .filter(p =>
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.description.toLowerCase().includes(search.toLowerCase())
-    )
-    .filter(p => statusFilter === "all" || p.status === statusFilter);
+  const fetchLifecycleStages = useCallback(async () => {
+    setLoading(true);
+    const res = await getLifecycleStages(page, pageSize, search, statusFilter);
+    if (res.success) {
+      setItems(res.data || []);
+      if (res.pagination) {
+        setPagination(res.pagination);
+      }
+    }
+    setLoading(false);
+  }, [page, search, statusFilter]);
 
-  const totalPages = Math.ceil(filteredItems.length / 10);
-  const paginatedItems = filteredItems.slice((page - 1) * 10, page * 10);
+  const fetchProducts = useCallback(async () => {
+    const res = await getProductsForLifecycle();
+    if (res.success) {
+      setProducts(res.data || []);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchLifecycleStages();
+    fetchProducts();
+  }, [fetchLifecycleStages, fetchProducts]);
 
   const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const newItem = {
-      id: Date.now(),
-      name: String(formData.get("name") || ""),
-      description: String(formData.get("description") || ""),
-      stage: String(formData.get("stage") || "planning"),
-      progress: Number(formData.get("progress") || 0),
-      product: String(formData.get("product") || ""),
-      status: String(formData.get("status") || "planning"),
-      createdAt: new Date().toISOString().split("T")[0],
-    };
-    setItems(prev => [newItem, ...prev]);
-    setShowCreate(false);
-    e.currentTarget.reset();
-  }
+    const res = await createLifecycleStage({
+      name: createData.name,
+      description: createData.description || undefined,
+      stage: createData.stage,
+      progress: createData.progress,
+      product: createData.product,
+      status: createData.status,
+      productId: createData.productId,
+    });
+    if (res.success) {
+      setShowCreate(false);
+      setCreateData({
+        name: "",
+        description: "",
+        stage: "planning",
+        progress: 0,
+        product: "",
+        status: "planning",
+        productId: undefined,
+      });
+      fetchLifecycleStages();
+    } else {
+      alert(res.error || "Failed to create lifecycle stage");
+    }
+  };
 
-  const handleUpdate = (id: number) => {
-    setItems(items.map(p => p.id === editingId ? { ...p, ...editData } : p));
-    setEditingId(null);
-  }
+  const handleUpdate = async (id: number) => {
+    const res = await updateLifecycleStage(id, editData);
+    if (res.success) {
+      setEditingId(null);
+      fetchLifecycleStages();
+    } else {
+      alert(res.error || "Failed to update lifecycle stage");
+    }
+  };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     if (!confirm("Delete this lifecycle stage?")) return;
-    setItems(items.filter(p => p.id !== id));
-  }
+    const res = await deleteLifecycleStage(id);
+    if (res.success) {
+      fetchLifecycleStages();
+    } else {
+      alert(res.error || "Failed to delete lifecycle stage");
+    }
+  };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6 p-6">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold">Lifecycle Management</h1>
         <Button onClick={() => setShowCreate(!showCreate)}>
@@ -97,50 +184,139 @@ export default function LifecycleClientPage() {
       </div>
 
       {showCreate && (
-        <form onSubmit={handleCreate} className="rounded border p-4 space-y-4 max-w-2xl">
+        <form
+          onSubmit={handleCreate}
+          className="max-w-2xl space-y-4 rounded border p-4"
+        >
           <h2 className="text-lg font-semibold">Add Lifecycle Stage</h2>
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium mb-1">Name</label>
-              <Input name="name" placeholder="Stage Name" required />
+              <label className="mb-1 block text-sm font-medium">Name</label>
+              <Input
+                name="name"
+                placeholder="Stage Name"
+                value={createData.name}
+                onChange={(e) =>
+                  setCreateData({ ...createData, name: e.target.value })
+                }
+                required
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Product</label>
-              <Input name="product" placeholder="Product Name" required />
+              <label className="mb-1 block text-sm font-medium">Product</label>
+              <Select
+                value={String(createData.productId || "")}
+                onValueChange={(v) =>
+                  setCreateData({
+                    ...createData,
+                    productId: v ? Number(v) : undefined,
+                  })
+                }
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select a product" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">Select a product</SelectItem>
+                  {products.map((p) => (
+                    <SelectItem key={p.id} value={String(p.id)}>
+                      {p.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium mb-1">Description</label>
-              <textarea name="description" className="w-full rounded border p-2 min-h-[80px]" />
+              <label className="mb-1 block text-sm font-medium">
+                Description
+              </label>
+              <textarea
+                name="description"
+                value={createData.description}
+                onChange={(e) =>
+                  setCreateData({ ...createData, description: e.target.value })
+                }
+                className="min-h-[80px] w-full rounded border p-2"
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Stage</label>
-              <Select name="stage" defaultValue="planning">
+              <label className="mb-1 block text-sm font-medium">Stage</label>
+              <Select
+                value={createData.stage}
+                onValueChange={(v) =>
+                  setCreateData({ ...createData, stage: v })
+                }
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {stages.map(s => <SelectItem key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</SelectItem>)}
+                  {stages.map((s) => (
+                    <SelectItem key={s} value={s}>
+                      {s.charAt(0).toUpperCase() + s.slice(1)}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Progress (%)</label>
-              <Input name="progress" type="number" min="0" max="100" defaultValue="0" />
+              <label className="mb-1 block text-sm font-medium">
+                Progress (%)
+              </label>
+              <Input
+                name="progress"
+                type="number"
+                min="0"
+                max="100"
+                value={createData.progress}
+                onChange={(e) =>
+                  setCreateData({
+                    ...createData,
+                    progress: Number(e.target.value),
+                  })
+                }
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Status</label>
-              <Select name="status" defaultValue="planning">
+              <label className="mb-1 block text-sm font-medium">Status</label>
+              <Select
+                value={createData.status}
+                onValueChange={(v) =>
+                  setCreateData({ ...createData, status: v })
+                }
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {statuses.map(s => <SelectItem key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1).replace("-", " ")}</SelectItem>)}
+                  {statuses.map((s) => (
+                    <SelectItem key={s} value={s}>
+                      {s.charAt(0).toUpperCase() + s.slice(1).replace("-", " ")}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
           </div>
           <div className="flex justify-end gap-2 pt-4">
-            <Button type="button" variant="outline" onClick={() => setShowCreate(false)}>Cancel</Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                setShowCreate(false);
+                setCreateData({
+                  name: "",
+                  description: "",
+                  stage: "planning",
+                  progress: 0,
+                  product: "",
+                  status: "planning",
+                  productId: undefined,
+                });
+              }}
+            >
+              Cancel
+            </Button>
             <Button type="submit">Create Stage</Button>
           </div>
         </form>
@@ -149,15 +325,26 @@ export default function LifecycleClientPage() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <div className="relative max-w-md">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">🔍</span>
+            <span className="text-muted-foreground absolute top-1/2 left-3 -translate-y-1/2">
+              🔍
+            </span>
             <Input
               placeholder="Search lifecycle stages..."
               value={search}
-              onChange={e => { setSearch(e.target.value); setPage(1); }}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
               className="pl-10"
             />
           </div>
-          <Select value={statusFilter} onValueChange={v => { setStatusFilter(v); setPage(1); }}>
+          <Select
+            value={statusFilter}
+            onValueChange={(v) => {
+              setStatusFilter(v);
+              setPage(1);
+            }}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by status" />
             </SelectTrigger>
@@ -184,15 +371,27 @@ export default function LifecycleClientPage() {
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
-<TableBody>
-              {paginatedItems.length === 0 ? (
+            <TableBody>
+              {loading ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                  <TableCell
+                    colSpan={6}
+                    className="text-muted-foreground py-8 text-center"
+                  >
+                    Loading...
+                  </TableCell>
+                </TableRow>
+              ) : items.length === 0 ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={6}
+                    className="text-muted-foreground py-8 text-center"
+                  >
                     No lifecycle stages found
                   </TableCell>
                 </TableRow>
               ) : (
-                paginatedItems.map((item) => (
+                items.map((item) => (
                   <TableRow key={item.id}>
                     <TableCell className="font-medium">{item.name}</TableCell>
                     <TableCell>{item.product}</TableCell>
@@ -201,14 +400,29 @@ export default function LifecycleClientPage() {
                     </TableCell>
                     <TableCell>
                       <div className="w-32">
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div className="bg-primary h-full rounded-full" style={{ width: `${item.progress}%` }} />
+                        <div className="bg-muted h-2 overflow-hidden rounded-full">
+                          <div
+                            className="bg-primary h-full rounded-full"
+                            style={{ width: `${item.progress}%` }}
+                          />
                         </div>
-                        <span className="text-xs text-muted-foreground">{item.progress}%</span>
+                        <span className="text-muted-foreground text-xs">
+                          {item.progress}%
+                        </span>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge variant={item.status === "completed" ? "default" : item.status === "in-progress" ? "default" : item.status === "cancelled" ? "destructive" : "secondary"}>
+                      <Badge
+                        variant={
+                          item.status === "completed"
+                            ? "default"
+                            : item.status === "in-progress"
+                              ? "default"
+                              : item.status === "cancelled"
+                                ? "destructive"
+                                : "secondary"
+                        }
+                      >
                         {item.status}
                       </Badge>
                     </TableCell>
@@ -220,11 +434,12 @@ export default function LifecycleClientPage() {
                           onClick={() => {
                             setEditData({
                               name: item.name,
-                              description: item.description,
+                              description: item.description || "",
                               stage: item.stage,
                               progress: item.progress,
                               product: item.product,
                               status: item.status,
+                              productId: item.productId ?? undefined,
                             });
                             setEditingId(item.id);
                           }}
@@ -234,11 +449,7 @@ export default function LifecycleClientPage() {
                         <Button
                           variant="destructive"
                           size="icon"
-                          onClick={() => {
-                            if (confirm("Delete this lifecycle stage?")) {
-                              handleDelete(item.id);
-                            }
-                          }}
+                          onClick={() => handleDelete(item.id)}
                         >
                           <span>Delete</span>
                         </Button>
@@ -251,63 +462,155 @@ export default function LifecycleClientPage() {
           </Table>
         </div>
 
-        {totalPages > 1 && (
+        {pagination.totalPages > 1 && (
           <div className="flex items-center justify-center gap-2">
-            <Button variant="outline" size="sm" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page === 1}
+            >
               Prev
             </Button>
-            <span className="text-sm text-muted-foreground">
-              Page {page} of {totalPages}
+            <span className="text-muted-foreground text-sm">
+              Page {pagination.page} of {pagination.totalPages}
             </span>
-            <Button variant="outline" size="sm" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                setPage((p) => Math.min(pagination.totalPages, p + 1))
+              }
+              disabled={page === pagination.totalPages}
+            >
               Next
             </Button>
           </div>
         )}
 
         {editingId && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-background rounded-lg p-6 w-full max-w-md space-y-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+            <div className="bg-background w-full max-w-md space-y-4 rounded-lg p-6">
               <h2 className="text-lg font-semibold">Edit Lifecycle Stage</h2>
-              <form onSubmit={async (e) => { e.preventDefault(); await handleUpdate(editingId!); }}>
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  await handleUpdate(editingId!);
+                }}
+              >
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-sm font-medium mb-1">Name</label>
-                    <Input value={editData.name} onChange={e => setEditData({...editData, name: e.target.value})} required />
+                    <label className="mb-1 block text-sm font-medium">
+                      Name
+                    </label>
+                    <Input
+                      value={editData.name}
+                      onChange={(e) =>
+                        setEditData({ ...editData, name: e.target.value })
+                      }
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Description</label>
-                    <textarea value={editData.description} onChange={e => setEditData({...editData, description: e.target.value})} className="w-full rounded border p-2 min-h-[80px]" />
+                    <label className="mb-1 block text-sm font-medium">
+                      Description
+                    </label>
+                    <textarea
+                      value={editData.description}
+                      onChange={(e) =>
+                        setEditData({
+                          ...editData,
+                          description: e.target.value,
+                        })
+                      }
+                      className="min-h-[80px] w-full rounded border p-2"
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Stage</label>
-                    <Select value={editData.stage} onValueChange={v => setEditData({...editData, stage: v})}>
+                    <label className="mb-1 block text-sm font-medium">
+                      Stage
+                    </label>
+                    <Select
+                      value={editData.stage}
+                      onValueChange={(v) =>
+                        setEditData({ ...editData, stage: v })
+                      }
+                    >
                       <SelectTrigger className="w-full">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {["planning", "discovery", "design", "development", "testing", "deployment", "launch"].map(s => <SelectItem key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</SelectItem>)}
+                        {[
+                          "planning",
+                          "discovery",
+                          "design",
+                          "development",
+                          "testing",
+                          "deployment",
+                          "launch",
+                        ].map((s) => (
+                          <SelectItem key={s} value={s}>
+                            {s.charAt(0).toUpperCase() + s.slice(1)}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Progress (%)</label>
-                    <Input type="number" min="0" max="100" value={editData.progress} onChange={e => setEditData({...editData, progress: Number(e.target.value)})} />
+                    <label className="mb-1 block text-sm font-medium">
+                      Progress (%)
+                    </label>
+                    <Input
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={editData.progress}
+                      onChange={(e) =>
+                        setEditData({
+                          ...editData,
+                          progress: Number(e.target.value),
+                        })
+                      }
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Status</label>
-                    <Select value={editData.status} onValueChange={v => setEditData({...editData, status: v})}>
+                    <label className="mb-1 block text-sm font-medium">
+                      Status
+                    </label>
+                    <Select
+                      value={editData.status}
+                      onValueChange={(v) =>
+                        setEditData({ ...editData, status: v })
+                      }
+                    >
                       <SelectTrigger className="w-full">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {["planning", "in-progress", "completed", "on-hold", "cancelled"].map(s => <SelectItem key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1).replace("-", " ")}</SelectItem>)}
+                        {[
+                          "planning",
+                          "in-progress",
+                          "completed",
+                          "on-hold",
+                          "cancelled",
+                        ].map((s) => (
+                          <SelectItem key={s} value={s}>
+                            {s.charAt(0).toUpperCase() +
+                              s.slice(1).replace("-", " ")}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
                 <div className="flex justify-end gap-2 pt-4">
-                  <Button type="button" variant="outline" onClick={() => setEditingId(null)}>Cancel</Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setEditingId(null)}
+                  >
+                    Cancel
+                  </Button>
                   <Button type="submit">Save Changes</Button>
                 </div>
               </form>

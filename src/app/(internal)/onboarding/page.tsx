@@ -1,6 +1,13 @@
 "use client";
 
-import { Key, Loader2, MessageCircle, Send, ShieldAlert, ShieldCheck } from "lucide-react";
+import {
+  Key,
+  Loader2,
+  MessageCircle,
+  Send,
+  ShieldAlert,
+  ShieldCheck,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -64,7 +71,9 @@ export default function OnboardingPage() {
       if (!res.ok) {
         if (data.error === "MAX_ATTEMPTS_REACHED") {
           setState("locked");
-          setMessage("Terlalu banyak percobaan. Kamu akan diarahkan ke halaman login.");
+          setMessage(
+            "Terlalu banyak percobaan. Kamu akan diarahkan ke halaman login.",
+          );
           setTimeout(() => {
             fetch("/api/admin/auth/logout", { method: "POST" }).finally(() => {
               window.location.href = "/register";
@@ -113,7 +122,9 @@ export default function OnboardingPage() {
             <span className="text-foreground mb-1 block text-center font-mono text-lg font-bold tracking-[0.15em]">
               RYNEX
             </span>
-            <h1 className="mt-4 text-2xl font-bold">Verifikasi Lisensi Admin</h1>
+            <h1 className="mt-4 text-2xl font-bold">
+              Verifikasi Lisensi Admin
+            </h1>
             <p className="text-muted-foreground mt-1 text-sm">
               Masukkan kunci lisensi untuk mengakses dashboard
             </p>
@@ -152,7 +163,8 @@ export default function OnboardingPage() {
                   disabled={state === "loading"}
                 />
                 <p className="text-muted-foreground text-xs">
-                  Sisa percobaan: <span className="font-semibold">{attemptsLeft}</span>
+                  Sisa percobaan:{" "}
+                  <span className="font-semibold">{attemptsLeft}</span>
                 </p>
               </div>
 

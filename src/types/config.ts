@@ -37,11 +37,7 @@ export interface CollaborationItem {
 }
 
 export type CollabType =
-  | "development"
-  | "research"
-  | "community"
-  | "design"
-  | "strategic";
+  "development" | "research" | "community" | "design" | "strategic";
 export type CollabStatus = "active" | "completed" | "planned";
 
 export interface EcosystemItem {
@@ -55,8 +51,4 @@ export interface EcosystemItem {
 }
 
 export type EcosystemType =
-  | "platform"
-  | "studio"
-  | "product"
-  | "community"
-  | "tool";
+  "platform" | "studio" | "product" | "community" | "tool";

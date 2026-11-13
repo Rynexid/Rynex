@@ -41,7 +41,11 @@ export const showcaseProjects: ShowcaseProject[] = [
     techStack: "React + TypeScript + TailwindCSS + Vite + Recharts",
     cover: "/showcase/ocupite.webp",
     images: ["/showcase/ocupite.webp"],
-    highlights: ["AI chat integration", "Performance analytics", "Real-time attendance"],
+    highlights: [
+      "AI chat integration",
+      "Performance analytics",
+      "Real-time attendance",
+    ],
     icon: Briefcase,
   },
   {
@@ -73,7 +77,11 @@ export const showcaseProjects: ShowcaseProject[] = [
     techStack: "React + TypeScript + TailwindCSS + Recharts + Framer Motion",
     cover: "/showcase/codename.webp",
     images: ["/showcase/codename.webp"],
-    highlights: ["Framer Motion animations", "Platform breakdown", "Sales performance tracking"],
+    highlights: [
+      "Framer Motion animations",
+      "Platform breakdown",
+      "Sales performance tracking",
+    ],
     icon: Globe,
   },
   {
@@ -89,7 +97,11 @@ export const showcaseProjects: ShowcaseProject[] = [
     techStack: "React + TypeScript + TailwindCSS",
     cover: "/showcase/confidencyos.webp",
     images: ["/showcase/confidencyos.webp"],
-    highlights: ["Mobile-first responsive", "Live activity feed", "Multi-section sidebar"],
+    highlights: [
+      "Mobile-first responsive",
+      "Live activity feed",
+      "Multi-section sidebar",
+    ],
     icon: LayoutDashboard,
   },
   {
@@ -105,7 +117,11 @@ export const showcaseProjects: ShowcaseProject[] = [
     techStack: "React + TypeScript + TailwindCSS + Recharts + React CountUp",
     cover: "/showcase/ecomiq.webp",
     images: ["/showcase/ecomiq.webp"],
-    highlights: ["Real-time visitor counter", "Dual chart comparison", "Minimal sidebar icons"],
+    highlights: [
+      "Real-time visitor counter",
+      "Dual chart comparison",
+      "Minimal sidebar icons",
+    ],
     icon: ShoppingBag,
   },
   {
@@ -121,7 +137,11 @@ export const showcaseProjects: ShowcaseProject[] = [
     techStack: "Next.js + TypeScript + TailwindCSS",
     cover: "/showcase/sublime.webp",
     images: ["/showcase/sublime.webp"],
-    highlights: ["Serif typography", "Luxury whitespace", "Minimalist navigation"],
+    highlights: [
+      "Serif typography",
+      "Luxury whitespace",
+      "Minimalist navigation",
+    ],
     icon: Palette,
   },
   {
@@ -137,7 +157,11 @@ export const showcaseProjects: ShowcaseProject[] = [
     techStack: "Next.js + TypeScript + TailwindCSS",
     cover: "/showcase/belo-fur.webp",
     images: ["/showcase/belo-fur.webp"],
-    highlights: ["Warm earthy palette", "Hero + CTA layout", "Newsletter integration"],
+    highlights: [
+      "Warm earthy palette",
+      "Hero + CTA layout",
+      "Newsletter integration",
+    ],
     icon: Sofa,
   },
   {
@@ -153,7 +177,11 @@ export const showcaseProjects: ShowcaseProject[] = [
     techStack: "Next.js + TypeScript + TailwindCSS",
     cover: "/showcase/ovalen.webp",
     images: ["/showcase/ovalen.webp"],
-    highlights: ["Mixed dark/light sections", "Serif hero typography", "Product filtering"],
+    highlights: [
+      "Mixed dark/light sections",
+      "Serif hero typography",
+      "Product filtering",
+    ],
     icon: Watch,
   },
   {
@@ -169,7 +197,11 @@ export const showcaseProjects: ShowcaseProject[] = [
     techStack: "Next.js + TypeScript + TailwindCSS",
     cover: "/showcase/piccollo.webp",
     images: ["/showcase/piccollo.webp"],
-    highlights: ["Full e-commerce flow", "Rating & review system", "Modular components"],
+    highlights: [
+      "Full e-commerce flow",
+      "Rating & review system",
+      "Modular components",
+    ],
     icon: Gem,
   },
   {
@@ -185,7 +217,11 @@ export const showcaseProjects: ShowcaseProject[] = [
     techStack: "Next.js + TypeScript + TailwindCSS",
     cover: "/showcase/cozypaws.webp",
     images: ["/showcase/cozypaws.webp"],
-    highlights: ["Playful warm palette", "Floating product cards", "Video review section"],
+    highlights: [
+      "Playful warm palette",
+      "Floating product cards",
+      "Video review section",
+    ],
     icon: PawPrint,
   },
 ];

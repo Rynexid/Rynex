@@ -94,10 +94,7 @@ export async function getAdminSession() {
     .select()
     .from(adminSessions)
     .where(
-      and(
-        eq(adminSessions.id, token),
-        gt(adminSessions.expiresAt, new Date()),
-      ),
+      and(eq(adminSessions.id, token), gt(adminSessions.expiresAt, new Date())),
     )
     .limit(1);
 

@@ -3,15 +3,41 @@
 import { motion } from "framer-motion";
 
 const row1 = [
-  "Healthcare", "Education", "Retail", "Restaurant", "Hotel", "Government",
-  "Manufacturing", "Finance", "Startup", "Community", "Logistics", "NGO",
+  "Healthcare",
+  "Education",
+  "Retail",
+  "Restaurant",
+  "Hotel",
+  "Government",
+  "Manufacturing",
+  "Finance",
+  "Startup",
+  "Community",
+  "Logistics",
+  "NGO",
 ];
 const row2 = [
-  "E-commerce", "SaaS", "Real Estate", "Agriculture", "Transport", "Media",
-  "Insurance", "Telecom", "Energy", "Legal", "Nonprofit", "Entertainment",
+  "E-commerce",
+  "SaaS",
+  "Real Estate",
+  "Agriculture",
+  "Transport",
+  "Media",
+  "Insurance",
+  "Telecom",
+  "Energy",
+  "Legal",
+  "Nonprofit",
+  "Entertainment",
 ];
 
-function MarqueeRow({ items, reverse = false }: { items: string[]; reverse?: boolean }) {
+function MarqueeRow({
+  items,
+  reverse = false,
+}: {
+  items: string[];
+  reverse?: boolean;
+}) {
   const doubled = [...items, ...items];
   return (
     <div className="overflow-hidden">
@@ -23,7 +49,7 @@ function MarqueeRow({ items, reverse = false }: { items: string[]; reverse?: boo
         {doubled.map((item, i) => (
           <span
             key={`${item}-${i}`}
-            className="whitespace-nowrap rounded-full border border-white/[0.08] bg-white/[0.03] px-5 py-2.5 text-sm text-muted-foreground backdrop-blur-sm transition-colors duration-300 hover:border-sky-300/50 hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground rounded-full border border-white/[0.08] bg-white/[0.03] px-5 py-2.5 text-sm whitespace-nowrap backdrop-blur-sm transition-colors duration-300 hover:border-sky-300/50"
           >
             {item}
           </span>
@@ -35,7 +61,10 @@ function MarqueeRow({ items, reverse = false }: { items: string[]; reverse?: boo
 
 export function IndustriesSection() {
   return (
-    <section className="spacious-section relative overflow-hidden" id="industries">
+    <section
+      className="spacious-section relative overflow-hidden"
+      id="industries"
+    >
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

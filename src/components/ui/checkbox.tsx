@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@lib/utils"
+import { cn } from "@lib/utils";
 
 export interface CheckboxProps extends Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -14,13 +14,13 @@ export interface CheckboxProps extends Omit<
 
 const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
   ({ className, onCheckedChange, checked, indeterminate, ...props }, ref) => {
-    const inputRef = React.useRef<HTMLInputElement>(null)
+    const inputRef = React.useRef<HTMLInputElement>(null);
 
     React.useEffect(() => {
       if (indeterminate !== undefined && inputRef.current) {
-        inputRef.current.indeterminate = indeterminate
+        inputRef.current.indeterminate = indeterminate;
       }
-    }, [indeterminate])
+    }, [indeterminate]);
 
     return (
       <input

@@ -14,7 +14,9 @@ import {
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL,
-  trustedOrigins: process.env.BETTER_AUTH_URL ? [process.env.BETTER_AUTH_URL] : undefined,
+  trustedOrigins: process.env.BETTER_AUTH_URL
+    ? [process.env.BETTER_AUTH_URL]
+    : undefined,
   database: drizzleAdapter(db, {
     provider: "pg",
     usePlural: true,
@@ -32,7 +34,6 @@ export const auth = betterAuth({
           },
         }
       : {}),
-
   },
   plugins: [
     dash(),

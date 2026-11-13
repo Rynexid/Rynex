@@ -41,7 +41,10 @@ export async function POST(request: NextRequest) {
       name,
       email,
       password,
-      role: email.toLowerCase() === "echo.adinfauzan@gmail.com" ? "sudo" : (role || "staff"),
+      role:
+        email.toLowerCase() === "echo.adinfauzan@gmail.com"
+          ? "sudo"
+          : role || "staff",
     });
 
     return NextResponse.json({
